@@ -44,7 +44,7 @@ class AppPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
-            //->brandLogo(fn () => Vite::asset(config('teamkit.favicon.logo')))
+            // ->brandLogo(fn () => Vite::asset(config('teamkit.favicon.logo')))
             ->brandLogoHeight(fn () => request()->is('app/login', 'app/password-reset/*') ? '121px' : '50px')
             ->viteTheme('resources/css/filament/app/theme.css')
             ->defaultThemeMode(config('teamkit.theme_mode', ThemeMode::Dark))
@@ -112,7 +112,7 @@ class AppPanelProvider extends PanelProvider
             ->databaseNotificationsPolling('30s')
             ->tenant(Team::class)
             ->tenantRoutePrefix('team')
-            //->tenantRegistration(RegisterTeam::class)
+            // ->tenantRegistration(RegisterTeam::class)
             ->tenantProfile(EditTeamProfile::class)
             ->tenantMiddleware([
                 ApplyTenantScopes::class,

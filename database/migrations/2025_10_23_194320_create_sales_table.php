@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('delivery_date')->nullable();
             $table->string('dn_reference')->nullable();
             $table->date('due_date')->nullable();
-           // $table->string('currency')
+            // $table->string('currency')
             $table->boolean('is_vat')->default(true);
             $table->string('payment_terms')->nullable();
             $table->string('invoice_period')->nullable();
