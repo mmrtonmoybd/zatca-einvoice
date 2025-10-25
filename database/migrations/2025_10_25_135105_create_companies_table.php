@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('arabic_vat_number');
             $table->string('cr_no');
             $table->string('arabic_cr_no');
-            
-            // Bank Details 
+
+            // Bank Details
             $table->string('bank_name')->nullable();
             $table->string('arabic_bank_name')->nullable();
             $table->string('bank_account_number')->nullable();

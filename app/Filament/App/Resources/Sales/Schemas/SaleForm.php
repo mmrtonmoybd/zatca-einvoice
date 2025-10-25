@@ -280,12 +280,11 @@ class SaleForm
         $totalCashDiscount = $get('total_cash_discount') ?? 0;
         $grandTotal = $totalAmount - $totalCashDiscount;
 
-    // Set top-level totals
-    $withouttax = $totalAmount - $totalTax;
-    $set('final_total_amount', $withouttax);
-    $set('final_total_tax', $totalTax);
-    $set('total_product_discount', $totalDiscount);
-    $set('grand_total', $grandTotal);
-}
-
+        // Set top-level totals
+        $withouttax = $totalAmount - $totalTax;
+        $set('final_total_amount', $withouttax);
+        $set('final_total_tax', $totalTax);
+        $set('total_product_discount', $totalDiscount);
+        $set('grand_total', $grandTotal);
+    }
 }

@@ -7,6 +7,7 @@ use App\Filament\App\Pages\TeamInvitationAccept;
 use App\Filament\App\Pages\Tenancy\EditTeamProfile;
 use App\Filament\App\Pages\Tenancy\RegisterTeam;
 use App\Http\Middleware\ApplyTenantScopes;
+use App\Http\Middleware\CheckTenantSuspension;
 use App\Http\Middleware\CurrentTenant;
 use App\Models\Team;
 use Filament\Actions\Action;
@@ -30,7 +31,6 @@ use Illuminate\Support\Facades\Vite;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
-use App\Http\Middleware\CheckTenantSuspension;
 
 class AppPanelProvider extends PanelProvider
 {
@@ -101,7 +101,7 @@ class AppPanelProvider extends PanelProvider
                     ->url(fn (): string => EditProfilePage::getUrl())
                     ->icon('heroicon-m-user-circle')
                     ->visible(fn () => Filament::getTenant() !== null),
-                    /*
+                /*
                 'invitations' => Action::make('invitations')
                     ->label(fn (): string => __('Invitations'))
                     ->url(fn (): string => TeamInvitationAccept::getUrl())
@@ -116,7 +116,7 @@ class AppPanelProvider extends PanelProvider
             ->databaseNotificationsPolling('30s')
             ->tenant(Team::class)
             ->tenantRoutePrefix('company')
-            //->tenantRegistration(RegisterTeam::class)
+            // ->tenantRegistration(RegisterTeam::class)
            // ->tenantProfile(EditTeamProfile::class)
             ->tenantMiddleware([
                 ApplyTenantScopes::class,
@@ -124,11 +124,11 @@ class AppPanelProvider extends PanelProvider
                 CheckTenantSuspension::class,
             ], isPersistent: true)
             ->tenantMenu(false)
-            //->requiresTenantSubscription()v
+            // ->requiresTenantSubscription()v
             ->navigationGroups([
-       'Masters' ,
-       'Sales' ,
-       'Admisnistration',
-    ]);
+                'Masters',
+                'Sales',
+                'Admisnistration',
+            ]);
     }
 }
