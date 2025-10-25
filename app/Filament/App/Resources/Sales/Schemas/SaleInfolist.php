@@ -45,7 +45,7 @@ class SaleInfolist
                     ->numeric(),
                 TextEntry::make('total_cash_discount')
                     ->numeric(),
-
+                
                 TextEntry::make('file')
                     ->placeholder('-'),
                 TextEntry::make('created_at')

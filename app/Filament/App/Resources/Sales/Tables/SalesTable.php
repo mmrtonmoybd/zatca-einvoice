@@ -2,17 +2,17 @@
 
 namespace App\Filament\App\Resources\Sales\Tables;
 
-use App\Models\Sale;
-use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Actions\Action;
+use App\Models\Sale;
 
 class SalesTable
 {

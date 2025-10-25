@@ -3,10 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Filament\Facades\Filament;
-use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Filament\Facades\Filament;
+use Filament\Notifications\Notification;
 
 class CheckTenantSuspension
 {
@@ -30,17 +30,17 @@ class CheckTenantSuspension
                 'filament.app.pages.my-profile',
                 'filament.app.auth.logout',
                 'filament.app.pages.dashboard',
-                'filament.app.tenant',
+                'filament.app.tenant'
             ];
 
             if (! in_array($request->route()?->getName(), $allowedRoutes)) {
                 // Optional: show a message
-                // session()->flash('suspended_message', 'Your subscription has expired. Please renew to regain access.');
+               // session()->flash('suspended_message', 'Your subscription has expired. Please renew to regain access.');
 
                 Notification::make('Error')
-                    ->title('suspended_message')
-                    ->danger()
-                    ->body('Your subscription has expired. Please renew to regain access.')->send();
+        ->title('suspended_message')
+        ->danger()
+        ->body('Your subscription has expired. Please renew to regain access.')->send();
 
                 // Redirect to dashboard or a suspension page
                 return redirect()->route('filament.app.pages.dashboard', $tenant);

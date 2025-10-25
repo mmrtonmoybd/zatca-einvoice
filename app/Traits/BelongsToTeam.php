@@ -4,8 +4,6 @@ namespace App\Traits;
 
 use Filament\Facades\Filament;
 
-//
-
 trait BelongsToTeam
 {
     protected static function bootBelongsToTeam()

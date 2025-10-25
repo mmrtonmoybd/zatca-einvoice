@@ -2,12 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\Sale;
 use App\Providers\Filament\AdminPanelProvider;
 use App\Providers\Filament\AppPanelProvider;
 use App\Providers\Filament\GuestPanelProvider;
 use Filament\Actions;
-use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Infolists;
 use Filament\Notifications;
@@ -20,11 +18,14 @@ use Filament\Tables;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\ValidationException;
+
+use App\Models\Sale;
+use Illuminate\Support\Facades\Gate;
+use Filament\Facades\Filament;
 
 use function view;
 
@@ -69,15 +70,16 @@ class AppServiceProvider extends ServiceProvider
         $this->configurePages();
         $this->configureTables();
 
-        Gate::define('access-sale', function ($user, Sale $sale) {
-            $tenant = Filament::getTenant();
+Gate::define('access-sale', function ($user, Sale $sale) {
+    $tenant = Filament::getTenant();
 
-            if ($tenant && $tenant->id !== $user->current_team_id) {
-                return false;
-            }
+    if ($tenant && $tenant->id !== $user->current_team_id) {
+        return false;
+    }
 
-            return $sale->team_id === ($tenant?->id ?? $user->current_team_id);
-        });
+    return $sale->team_id === ($tenant?->id ?? $user->current_team_id);
+});
+
 
     }
 

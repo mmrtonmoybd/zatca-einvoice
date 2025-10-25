@@ -18,10 +18,8 @@ use UnitEnum;
 
 class ProductResource extends Resource
 {
-    protected static string|UnitEnum|null $navigationGroup = 'Masters';
-
-    protected static ?int $navigationSort = 4;
-
+protected static string | UnitEnum | null $navigationGroup = 'Masters';
+protected static ? int $navigationSort = 4;
     protected static ?string $model = Product::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;

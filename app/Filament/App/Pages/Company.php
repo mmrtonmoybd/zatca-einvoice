@@ -2,18 +2,19 @@
 
 namespace App\Filament\App\Pages;
 
-use BackedEnum;
-use Filament\Facades\Filament;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
+use Filament\Support\Icons\Heroicon;
+use Filament\Facades\Filament;
+use Filament\Notifications\Notification;
+use Filament\Support\Exceptions\Halt;
+use BackedEnum;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Schema;
-use Filament\Support\Exceptions\Halt;
-use Filament\Support\Icons\Heroicon;
+use Filament\Schemas\Components\Tabs\Tab;
 use UnitEnum;
 
 class Company extends Page implements HasForms
@@ -22,14 +23,11 @@ class Company extends Page implements HasForms
 
     public ?array $data = [];
 
-    protected static string|UnitEnum|null $navigationGroup = 'Admisnistration';
+    protected static string | UnitEnum | null $navigationGroup = 'Admisnistration';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-
     protected static ?string $navigationLabel = 'Company Info';
-
     protected static ?string $slug = 'company';
-
     protected string $view = 'filament.app.pages.company';
 
     /**
@@ -157,7 +155,6 @@ class Company extends Page implements HasForms
                 ->danger()
                 ->title('Tenant not found.')
                 ->send();
-
             return;
         }
 

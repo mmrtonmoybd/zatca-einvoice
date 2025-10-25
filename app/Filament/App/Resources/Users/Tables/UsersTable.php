@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\Users\Tables;
 
+use App\Models\User;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -10,6 +11,8 @@ use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Facades\Filament;
+use App\Models\Membership;
 use Illuminate\Database\Eloquent\Builder;
 
 class UsersTable
@@ -43,17 +46,17 @@ class UsersTable
                 //
             ])
             ->modifyQueryUsing(function (Builder $query) {
-                $query->where('id', '!=', auth()->user()->id); // or false
-            })
+        $query->where('id', '!=', auth()->user()->id);// or false
+    })
             ->recordActions([
-                        ViewAction::make(),
-                        EditAction::make(),
-                        DeleteAction::make(),
-                    ])
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
+            ])
             ->toolbarActions([
-                        BulkActionGroup::make([
-                            DeleteBulkAction::make(),
-                        ]),
-                    ]);
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+            ]);
     }
 }

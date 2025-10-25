@@ -92,16 +92,18 @@ class Team extends Model
     }
 
     public function company()
-    {
-        return $this->hasOne(Company::class, 'team_id');
-    }
+{
+    return $this->hasOne(Company::class, 'team_id');
+}
 
     // App\Models\Team.php
 
-    public function isSuspended(): bool
-    {
-        return $this->is_active === false || ($this->expires_at && now()->greaterThan($this->expires_at));
-    }
+public function isSuspended(): bool
+{
+    return $this->is_active === false || ($this->expires_at && now()->greaterThan($this->expires_at));
+}
+
+
 
     protected function casts(): array
     {

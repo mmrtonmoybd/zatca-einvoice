@@ -18,16 +18,17 @@ class ProductsTable
     {
         return $table
             ->columns([
-                // ImageColumn::make('image'),
-
+                //ImageColumn::make('image'),
+                
+                
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('category.name')
-                    // ->numeric()
+                    //->numeric()
                     ->searchable(),
-                // TextColumn::make('arabic_name')->searchable(),
+                //TextColumn::make('arabic_name')->searchable(),
                 TextColumn::make('code')->searchable(),
-                // TextColumn::make('description')->searchable(),
+                //TextColumn::make('description')->searchable(),
                 TextColumn::make('tax_rate')
                     ->numeric()
                     ->sortable(),
@@ -36,25 +37,25 @@ class ProductsTable
                     ->numeric()
                     ->sortable(),
                 IconColumn::make('is_taxable')->boolean(),
-
-                // TextColumn::make('minimum_stock_level')
-                // ->numeric()
-                // ->sortable(),
-                // TextColumn::make('maximum_stock_level')
-                // ->numeric()
-                // ->sortable(),
-                // TextColumn::make('mrp')
-                // ->numeric()
-                // ->sortable(),
-                // IconColumn::make('is_multi_unit')
-                // ->boolean(),
-                // TextColumn::make('hsnCode')
-                // ->searchable(),
-                // TextColumn::make('avg_quantity')
-                // ->numeric()
-                // ->sortable(),
-                // IconColumn::make('low_stock_alert')
-                // ->boolean(),
+                
+                //TextColumn::make('minimum_stock_level')
+                    //->numeric()
+                   // ->sortable(),
+               // TextColumn::make('maximum_stock_level')
+                    //->numeric()
+                    //->sortable(),
+                //TextColumn::make('mrp')
+                   // ->numeric()
+                    //->sortable(),
+                //IconColumn::make('is_multi_unit')
+                   // ->boolean(),
+               // TextColumn::make('hsnCode')
+                   // ->searchable(),
+               // TextColumn::make('avg_quantity')
+                    //->numeric()
+                   // ->sortable(),
+                //IconColumn::make('low_stock_alert')
+                    //->boolean(),
                 IconColumn::make('is_active')
                     ->boolean(),
                 TextColumn::make('created_at')

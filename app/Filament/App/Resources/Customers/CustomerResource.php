@@ -10,12 +10,12 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
@@ -25,10 +25,8 @@ use UnitEnum;
 
 class CustomerResource extends Resource
 {
-    protected static string|UnitEnum|null $navigationGroup = 'Masters';
-
-    protected static ?int $navigationSort = 3;
-
+protected static string | UnitEnum | null $navigationGroup = 'Masters';
+protected static ? int $navigationSort = 3;
     protected static ?string $model = Customer::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
@@ -122,26 +120,27 @@ class CustomerResource extends Resource
                     ->searchable(),
                 TextColumn::make('arabic_name')
                     ->searchable(),
-
+                
                     */
 
+                
                 /*
                 TextColumn::make('arabic_address')
                     ->searchable(),
                     */
                 TextColumn::make('code')
                     ->searchable(),
-                // TextColumn::make('phone')->searchable(),
+                //TextColumn::make('phone')->searchable(),
                 TextColumn::make('mobile')
                     ->searchable(),
-                // TextColumn::make('email')->label('Email address') ->searchable(),
+                //TextColumn::make('email')->label('Email address') ->searchable(),
                 TextColumn::make('vat_no')
                     ->searchable(),
 
                 TextColumn::make('address')
                     ->searchable(),
-                // TextColumn::make('cr_no')->searchable(),
-                // TextColumn::make('contact_person')->searchable(),
+                //TextColumn::make('cr_no')->searchable(),
+                //TextColumn::make('contact_person')->searchable(),
                 IconColumn::make('is_active')
                     ->boolean(),
                 TextColumn::make('created_at')
