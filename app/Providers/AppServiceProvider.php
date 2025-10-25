@@ -23,6 +23,10 @@ use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\ValidationException;
 
+use App\Models\Sale;
+use Illuminate\Support\Facades\Gate;
+use Filament\Facades\Filament;
+
 use function view;
 
 class AppServiceProvider extends ServiceProvider
@@ -65,6 +69,18 @@ class AppServiceProvider extends ServiceProvider
         $this->configureInfolists();
         $this->configurePages();
         $this->configureTables();
+
+Gate::define('access-sale', function ($user, Sale $sale) {
+    $tenant = Filament::getTenant();
+
+    if ($tenant && $tenant->id !== $user->current_team_id) {
+        return false;
+    }
+
+    return $sale->team_id === ($tenant?->id ?? $user->current_team_id);
+});
+
+
     }
 
     private function configureActions(): void

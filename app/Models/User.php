@@ -192,6 +192,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->currentTeam;
     }
 
+    public function customTeam() {
+        return $this->hasMany(Team::class, 'id', 'current_team_id'); 
+    }
+
     protected function casts(): array
     {
         return [

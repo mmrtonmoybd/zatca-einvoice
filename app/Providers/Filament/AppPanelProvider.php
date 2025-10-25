@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Vite;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
+use App\Http\Middleware\CheckTenantSuspension;
 
 class AppPanelProvider extends PanelProvider
 {
@@ -100,23 +101,34 @@ class AppPanelProvider extends PanelProvider
                     ->url(fn (): string => EditProfilePage::getUrl())
                     ->icon('heroicon-m-user-circle')
                     ->visible(fn () => Filament::getTenant() !== null),
+                    /*
                 'invitations' => Action::make('invitations')
                     ->label(fn (): string => __('Invitations'))
                     ->url(fn (): string => TeamInvitationAccept::getUrl())
                     ->icon('heroicon-m-user-group')
                     ->visible(fn () => Filament::getTenant() !== null),
+
+                    */
             ])
             ->unsavedChangesAlerts()
             ->passwordReset()
             ->databaseNotifications()
             ->databaseNotificationsPolling('30s')
             ->tenant(Team::class)
-            ->tenantRoutePrefix('team')
+            ->tenantRoutePrefix('company')
             //->tenantRegistration(RegisterTeam::class)
-            ->tenantProfile(EditTeamProfile::class)
+           // ->tenantProfile(EditTeamProfile::class)
             ->tenantMiddleware([
                 ApplyTenantScopes::class,
                 CurrentTenant::class,
-            ], isPersistent: true);
+                CheckTenantSuspension::class,
+            ], isPersistent: true)
+            ->tenantMenu(false)
+            //->requiresTenantSubscription()v
+            ->navigationGroups([
+       'Masters' ,
+       'Sales' ,
+       'Admisnistration',
+    ]);
     }
 }

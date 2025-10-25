@@ -46,6 +46,8 @@ class Team extends Model
         'user_id',
         'name',
         'personal_team',
+        'expires_at',
+        'is_active',
     ];
 
     public function owner(): BelongsTo
@@ -89,10 +91,26 @@ class Team extends Model
             ->as('membership');
     }
 
+    public function company()
+{
+    return $this->hasOne(Company::class, 'team_id');
+}
+
+    // App\Models\Team.php
+
+public function isSuspended(): bool
+{
+    return $this->is_active === false || ($this->expires_at && now()->greaterThan($this->expires_at));
+}
+
+
+
     protected function casts(): array
     {
         return [
             'personal_team' => 'boolean',
+            'expires_at' => 'date',
+            'is_active' => 'boolean',
         ];
     }
 }

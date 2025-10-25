@@ -277,7 +277,8 @@ protected static function updateTotals(Get $get, Set $set): void
     $grandTotal = $totalAmount - $totalCashDiscount;
 
     // Set top-level totals
-    $set('final_total_amount', $totalAmount);
+    $withouttax = $totalAmount - $totalTax;
+    $set('final_total_amount', $withouttax);
     $set('final_total_tax', $totalTax);
     $set('total_product_discount', $totalDiscount);
     $set('grand_total', $grandTotal);

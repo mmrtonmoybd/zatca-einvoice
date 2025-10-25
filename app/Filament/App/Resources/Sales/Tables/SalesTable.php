@@ -3,12 +3,16 @@
 namespace App\Filament\App\Resources\Sales\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Actions\Action;
+use App\Models\Sale;
 
 class SalesTable
 {
@@ -24,34 +28,26 @@ class SalesTable
                 TextColumn::make('customer_id')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('type')
-                    ->searchable(),
                 TextColumn::make('po_eference')
                     ->searchable(),
                 TextColumn::make('delivery_date')
                     ->date()
                     ->sortable(),
-                TextColumn::make('dn_reference')
-                    ->searchable(),
-                TextColumn::make('due_date')
-                    ->date()
-                    ->sortable(),
-                IconColumn::make('is_vat')
-                    ->boolean(),
-                TextColumn::make('payment_terms')
-                    ->searchable(),
-                TextColumn::make('invoice_period')
-                    ->searchable(),
-                TextColumn::make('project_reference')
-                    ->searchable(),
-                TextColumn::make('total_product_discount')
+                TextColumn::make('final_total_amount')
                     ->numeric()
+                    ->label('Total')
+                    ->summarize(Sum::make()->money('SAR')->label(''))
                     ->sortable(),
-                TextColumn::make('total_cash_discount')
+                TextColumn::make('final_total_tax')
                     ->numeric()
+                    ->label('Tax')
+                    ->summarize(Sum::make()->money('SAR')->label(''))
                     ->sortable(),
-                TextColumn::make('file')
-                    ->searchable(),
+                TextColumn::make('grand_total')
+                    ->numeric()
+                    ->label('Grand Total')
+                    ->summarize(Sum::make()->money('SAR')->label(''))
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -67,8 +63,12 @@ class SalesTable
                 //
             ])
             ->recordActions([
+                Action::make('Download invoice')
+                    ->url(fn (Sale $record) => route('sale.invoice.pdf', $record))
+                    ->openUrlInNewTab(),
                 ViewAction::make(),
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
