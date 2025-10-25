@@ -2,16 +2,16 @@
 
 namespace App\Filament\App\Resources\Products\Schemas;
 
+use App\Models\Unit;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Utilities\Get;
-use App\Models\Unit;
 
 class ProductForm
 {
@@ -21,9 +21,8 @@ class ProductForm
             ->components([
                 FileUpload::make('image')
                     ->image(),
-                
 
-                    TextInput::make('name')
+                TextInput::make('name')
                     ->required(),
                 TextInput::make('arabic_name')
                     ->default(null),
@@ -45,10 +44,8 @@ class ProductForm
                     ->required()->default(false)->live(),
                 TextInput::make('tax_rate')
                     ->numeric()
-                    ->default(null)->visible(fn(Get $get) => $get('is_taxable')),
+                    ->default(null)->visible(fn (Get $get) => $get('is_taxable')),
 
-                
-                
                 TextInput::make('minimum_stock_level')
                     ->numeric()
                     ->default(null),
@@ -62,12 +59,11 @@ class ProductForm
                 Select::make('unit_id')
                     ->relationship('unit', 'name')->preload()->required()->live(),
 
-
                 Toggle::make('is_multi_unit')
-                    ->default(false)->visible(fn(Get $get) => !empty($get('unit_id')))->live(),
+                    ->default(false)->visible(fn (Get $get) => ! empty($get('unit_id')))->live(),
                 Repeater::make('multi_units')
                     ->label('Multi Measuring Units')
-                    ->maxItems(fn(Get $get) => Unit::where('unit_id', $get('unit_id'))->count('id') + 1)
+                    ->maxItems(fn (Get $get) => Unit::where('unit_id', $get('unit_id'))->count('id') + 1)
                     ->columnSpanFull()
                     ->columns(5)
                     ->live()
@@ -76,45 +72,56 @@ class ProductForm
                             ->label('Measuring Unit')
                             ->options(function (Get $get) {
                                 $unitId = $get('../../unit_id');
-                                //dd($unitId, $get);
-                                if (!$unitId) return [];
+                                // dd($unitId, $get);
+                                if (! $unitId) {
+                                    return [];
+                                }
 
                                 $unit = Unit::find($unitId);
-                                if (!$unit) return [];
+                                if (! $unit) {
+                                    return [];
+                                }
 
                                 return Unit::where('unit_id', $unit->id)->orWhere('id', $unit->id)
                                     ->orWhere('id', $unit->unit_id)
                                     ->pluck('name', 'id')
                                     ->toArray();
                             })->afterStateUpdated(function (Set $set, Get $get) {
-                $selectedUnitId = $get('unit_id');
-                if (!$selectedUnitId) {
-                    $set('unit_name', null);
-                    $set('unit_short_name', null);
-                    return;
-                }
+                                $selectedUnitId = $get('unit_id');
+                                if (! $selectedUnitId) {
+                                    $set('unit_name', null);
+                                    $set('unit_short_name', null);
 
-                $unit = Unit::find($selectedUnitId);
-                if (!$unit) return;
+                                    return;
+                                }
 
-                $set('unit_name', $unit->name);
-                $set('unit_short_name', $unit->short_name);
-            })
-            ->afterStateHydrated(function (Set $set, Get $get) {
-                $selectedUnitId = $get('unit_id');
-                if (!$selectedUnitId) return;
+                                $unit = Unit::find($selectedUnitId);
+                                if (! $unit) {
+                                    return;
+                                }
 
-                $unit = Unit::find($selectedUnitId);
-                if (!$unit) return;
+                                $set('unit_name', $unit->name);
+                                $set('unit_short_name', $unit->short_name);
+                            })
+                            ->afterStateHydrated(function (Set $set, Get $get) {
+                                $selectedUnitId = $get('unit_id');
+                                if (! $selectedUnitId) {
+                                    return;
+                                }
 
-                $set('unit_name', $unit->name);
-                $set('unit_short_name', $unit->short_name);
-            })->live(),
+                                $unit = Unit::find($selectedUnitId);
+                                if (! $unit) {
+                                    return;
+                                }
+
+                                $set('unit_name', $unit->name);
+                                $set('unit_short_name', $unit->short_name);
+                            })->live(),
 
                         TextInput::make('unit_name')->readOnly(),
                         TextInput::make('unit_short_name')->readOnly(),
-                        TextInput::make('sale_price')->numeric()->default(fn(Get $get) => $get('../../sale_price') ?? null),
-                        TextInput::make('pruchase_price')->numeric()->default(fn(Get $get) => $get('../../pruchase_price') ?? null),
+                        TextInput::make('sale_price')->numeric()->default(fn (Get $get) => $get('../../sale_price') ?? null),
+                        TextInput::make('pruchase_price')->numeric()->default(fn (Get $get) => $get('../../pruchase_price') ?? null),
                     ])
                     ->visible(fn (Get $get) => $get('is_multi_unit'))
                     ->live(),

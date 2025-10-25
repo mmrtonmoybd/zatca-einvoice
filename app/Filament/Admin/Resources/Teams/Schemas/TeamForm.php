@@ -2,11 +2,11 @@
 
 namespace App\Filament\Admin\Resources\Teams\Schemas;
 
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Schema;
 
 class TeamForm
 {
@@ -20,7 +20,7 @@ class TeamForm
                     ->required(),
                 TextInput::make('name')
                     ->required(),
-                
+
                 DatePicker::make('expires_at')->label('Expiration Date'),
                 Toggle::make('is_active')->default(true),
 

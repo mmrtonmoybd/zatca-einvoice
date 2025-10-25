@@ -13,18 +13,20 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Schemas\Components\Utilities\Get;
 use UnitEnum;
 
 class UnitResource extends Resource
 {
-protected static string | UnitEnum | null $navigationGroup = 'Masters';
-protected static ? int $navigationSort = 2;
+    protected static string|UnitEnum|null $navigationGroup = 'Masters';
+
+    protected static ?int $navigationSort = 2;
+
     protected static ?string $model = Unit::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
@@ -44,12 +46,12 @@ protected static ? int $navigationSort = 2;
                 TextInput::make('quantity')
                     ->required()
                     ->numeric(),
-                
+
                 Toggle::make('is_child')
                     ->required()->default(false)->live(),
                 Select::make('unit_id')
                     ->relationship('unit', 'name')
-                    ->preload()->visible(fn(Get $get) => $get('is_child')),
+                    ->preload()->visible(fn (Get $get) => $get('is_child')),
                 Toggle::make('is_active')
                     ->required()->default(true),
             ]);
