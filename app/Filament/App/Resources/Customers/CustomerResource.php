@@ -62,7 +62,11 @@ class CustomerResource extends Resource
                     ->default(null),
                 TextInput::make('vat_no')
                     ->default(null),
+                    TextInput::make('arabic_vat_no')
+                    ->default(null),
                 TextInput::make('cr_no')
+                    ->default(null),
+                TextInput::make('arabic_cr_no')
                     ->default(null),
                 TextInput::make('contact_person')
                     ->default(null),

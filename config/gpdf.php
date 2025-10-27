@@ -48,7 +48,7 @@ return [
      *
      * @var bool
      */
-    GpdfSet::SHOW_NUMBERS_AS_HINDI => false,
+    GpdfSet::SHOW_NUMBERS_AS_HINDI => true,
 
     /**
      * Set Max number of chars you can fit in one line, default is 50

@@ -1,17 +1,54 @@
 <!DOCTYPE html>
-<html lang="ar" >
+<html ang="ar">
 <head>
-  <meta charset='utf-8'>
+    <meta charset='utf-8'>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   
   <title>فاتورة ضريبية / VAT INVOICE - SI-103</title>
   <style>
-    @page {
-        /*to get full page */
-        margin:0;
-        text-align: center;
-        margin-bottom:0px;
-    }
+
+  
+
+html, body, table, td, th {
+  font-family: DejaVu Sans, sans-serif;
+  
+ 
+}
+
+
+/* Dompdf page box margins (apply to every page) */
+@page {
+  margin: 1.5in 0.5in 0.5in 0.5in;
+}
+header{
+        position: fixed;
+        left: 0px;
+        right: 0px;
+        height: 60px;
+        margin-top: -60px;
+      }
+
+/* Important: do NOT override top margin with body margin 0 */
+html, body {
+  background: #fff !important;
+  
+  margin: 0 auto;
+  padding: 150px 20px 25px;
+  background: var(--bg); 
+  direction: rtl;
+  font-size: 11px;
+  
+  
+}
+
+/* Add transparent offset inside body to preserve top margin on continuation pages */
+body::before {
+  content: "";
+  display: block;
+  height: 1.5in;
+  margin-top: -1.5in;
+}
+
     :root {
       --accent: #0a5aa1;
       --text: #222;
@@ -21,19 +58,8 @@
     }
 
     * { box-sizing: border-box; }
-    html, body {
-    margin: 0 !important;
-    padding: 0 !important;
-    background: #fff !important;
-}
- .container { 
-  max-width: 980px; 
-  margin: 0 auto;
-  padding: 10px 20px;
-  background: var(--bg); 
-  border: none;
-  border-radius: 0;
-}
+   
+
 
     .header {
       display: grid;
@@ -47,16 +73,18 @@
       display: flex; flex-direction: column; gap: 4px;
     }
     .title h1 {
-      margin: 0; font-size: 22px; font-weight: 700; color: var(--accent);
+      margin: 0; font-size: 22px; font-weight: 700; color: #fff;
+      text-align: center;
+      background-color: #043670ff;
     }
-    .title .subtitle { font-size: 14px; color: var(--muted); }
+    .title .subtitle { font-size: 13px; color: var(--muted); text-align: center; }
     .invoice-meta {
-      text-align: left; direction: ltr; font-size: 14px; color: var(--text);
+      text-align: left; direction: ltr; font-size: 13px; color: var(--text);
     }
     .invoice-meta .no { font-weight: 600; color: var(--accent); }
 
     h2.section-title {
-      margin: 18px 0 8px; font-size: 16px; color: var(--accent);
+      margin: 18px 0 8px; font-size: 13px; color: var(--accent);
       border-bottom: 1px dashed var(--border); padding-bottom: 6px;
     }
 
@@ -70,17 +98,26 @@
       border: 1px solid var(--border);
       padding: 5px 10px;
       vertical-align: middle;
-      font-size: 14px;
+      font-size: 11px;
     }
     th {
-      background: #eef6ff;
-      color: #073e73;
+      background: #043670ff;
+      color: #ffffffff;
       font-weight: 600;
       text-align: center;
     }
     td { color: var(--text); }
-    .ltr { direction: ltr; text-align: left; }
-    .rtl { direction: rtl; text-align: right; }
+    .ltr {
+  direction: ltr;
+  unicode-bidi: bidi-override;
+  text-align: left;
+}
+    .rtl {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+  text-align: right;
+  
+}
     .muted { color: var(--muted); }
     .nowrap { white-space: nowrap; }
 
@@ -97,6 +134,20 @@
       gap: 12px;
     }
 
+    table.items {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table.items thead {
+  display: table-header-group;
+}
+
+table.items tfoot {
+  display: table-footer-group;
+}
+
+
     .bank th { text-align: center; }
 
     .page-break {
@@ -110,14 +161,15 @@
   </style>
 </head>
 <body>
-
+<header>
+     <br>
+    </header>
   <div class="container">
 
     <!-- Header -->
     <div class="header">
       <div class="title">
-        <h1>فاتورة ضريبية / VAT INVOICE</h1>
-        <div class="subtitle">Invoice</div>
+        <h1>VAT INVOICE /  فاتورة ضريبة القيمة المضافة </h1>
       </div>
       <div class="invoice-meta">
         <div><span class="no">No:</span> SI-103</div>
@@ -129,28 +181,26 @@
     <table style="table-layout: fixed;">
 
       <tr>
-        <td class="ltr">From: MAKKI BIN MOHAMMED BIN MAKKI ALABBADI
-CONTRACTING EST.</td>
-        <td class="rtl">حسب: </td>
+        <td class="ltr">From: {{ $company->name }}</td>
+        <td class="rtl"> {{ $company->arabic_name }} :حسب</td>
         
 
       </tr>
       <tr>
-        <td class="ltr">Address: Dammam, Al-Adamah District , Kingdom of Saudi
-Arabia</td>
-        <td class="rtl">عنوان: </td>
+        <td class="ltr">Address: {{ $company->address }}</td>
+        <td class="rtl">    {{ $company->arabic_address }}: عنوان</td>
         
       </tr>
       <tr>
-        <td class="ltr">VAT: 300468685700003</td>
-        <td class="rtl">قيمة ارتفاع الضرائب:</td>
+        <td class="ltr">VAT: {{ $company->vat_number }}</td>
+        <td class="rtl">{{ $company->arabic_vat_number }} :قيمة ارتفاع الضرائب </td>
         
 
       </tr>
 
       <tr>
-        <td class="ltr">CR No: 300468685700003</td>
-        <td class="rtl">رقم السجل التجاري: </td>
+        <td class="ltr">CR No: {{ $company->cr_no }}</td>
+        <td class="rtl">{{ $company->arabic_cr_no }}: رقم السجل التجاري</td>
         
 
       </tr>
@@ -160,28 +210,26 @@ Arabia</td>
 
     <table style="table-layout: fixed;">
       <tr>
-        <td class="ltr">To: The Fundamental Installation For Electric</td>
-        <td class="rtl">إلى: </td>
+        <td class="ltr">To: {{ $sale->customer->name }}</td>
+        <td class="rtl">على: {{ $sale->customer->arabic_name }} </td>
         
 
       </tr>
       <tr>
-        <td class="ltr">Address: Dammam, Al-Adamah District , Kingdom of Saudi
-Arabia</td>
-        <td class="rtl">عنوان: </td>
+        <td class="ltr">Address: {{ $sale->customer->address }}</td>
+        <td class="rtl">عنوان: {{ $sale->customer->arabic_address }}</td>
         
       </tr>
       <tr>
-        <td class="ltr">VAT: 300468685700003</td>
-        <td class="rtl">قيمة ارتفاع الضرائب:</td>
+        <td class="ltr">VAT: {{ $sale->customer->vat_no }}</td>
+        <td class="rtl">{{ $sale->customer->arabic_vat_no }} ۳۱۰۰٥۹۹۷۹۹۰۰۰۰۳ :قيمة ارتفاع الضرائب </td>
         
 
       </tr>
 
       <tr>
-        <td class="ltr">CR No: 300468685700003</td>
-        <td class="rtl">رقم السجل التجاري: </td>
-        
+        <td class="ltr">CR No: {{ $sale->customer->cr_no }}</td>
+        <td class="rtl">{{ $sale->customer->arabic_cr_no }}: رقم السجل التجاري</td>
 
       </tr>
     </table>
@@ -198,18 +246,19 @@ Arabia</td>
         <th>رقم المشروع | Project / Reference No</th>
       </tr>
       <tr>
-        <td class="center">21-08-2025</td>
-        <td class="center">20-09-2025</td>
-        <td class="center">MAKKI 2025</td>
-        <td class="center">20-10-2025</td>
-        <td class="center">21-AUG TO 20-SEP-2025</td>
-        <td class="center">J0223 KSP # MAKKI</td>
+        <td class="center">{{ $sale->date }}</td>
+        <td class="center">{{ $sale->delivery_date }}</td>
+        <td class="center">{{ $sale->po_eference }}</td>
+        <td class="center">{{ $sale->due_date }}</td>
+        <td class="center">{{ $sale->invoice_period }}5</td>
+        <td class="center">{{ $sale->project_reference }}</td>
       </tr>
     </table>
 
     <!-- Items -->
 
     <table class="items">
+      <thead>
       <tr>
 
       <th>المجموع (ر.س) | Total</th>
@@ -222,125 +271,45 @@ Arabia</td>
       <th>الوصف | Description</th>
       <th>الشفرة | Code</th>
       <th>#</th>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-
-
-
-
-
-
-
 
       </tr>
+    </thead>
+    <tbody>
+      @foreach ($sale->products as $key => $productData)
+      
+      @endforeach
       <tr>
-        <td class="money">9,894.60</td>
-        <td class="money">1,290.60</td>
-        <td class="center">15.00</td>
-        <td class="money">8,604.00</td>
-        <td class="money">18.00</td>
-        <td class="center">478</td>
-        <td class="center">Hrs</td>
-        <td class="rtl">DUCT MAN / رجل القناة</td>
-        <td class="center">J0231</td>
-        <td class="center">1</td>
+        <td class="money">{{ $productData['total_amount'] }}</td>
+        <td class="money">{{ $productData['total_tax'] }}</td>
+        <td class="center">{{ $productData['vat'] }}</td>
+        <td class="money">{{ $productData['total_amount'] - $productData['total_tax'] }}</td>
+        <td class="money">{{ $productData['sale_price'] }}</td>
+        <td class="center">{{ $productData['quantity'] }}</td>
+        <td class="center">{{ optional(\App\Models\Unit::find($productData['unit_id']))->short_name }}</td>
+        @php
+        $product = \App\Models\Product::find($productData['product_id']);
+        @endphp
+        <td class="rtl">{{ $product->name }} / {{ $product->arabic_name }} </td>
+        <td class="center">{{ $product->code }}</td>
+        <td class="center">{{ $key + 1 }}</td>
       </tr>
-      <tr>
-        <td class="money">1,587.00</td>
-        <td class="money">207.00</td>
-        <td class="center">15.00</td>
-        <td class="money">1,380.00</td>
-        <td class="money">23.00</td>
-        <td class="center">60</td>
-        <td class="center">Hrs</td>
-        <td class="rtl">Electrician Foreman / رئيس عمال الكهرباء</td>
-        <td class="center">MMC # J0231</td>
-        <td class="center">2</td>
-      </tr>
-      <tr>
-        <td class="money">25,916.40</td>
-        <td class="money">3,380.40</td>
-        <td class="center">15.00</td>
-        <td class="money">22,536.00</td>
-        <td class="money">18.00</td>
-        <td class="center">1252</td>
-        <td class="center">Hrs</td>
-        <td class="rtl">ELECTRICIAN / کھربائي</td>
-        <td class="center">J209</td>
-        <td class="center">3</td>
-      </tr>
-      <tr>
-        <td class="money">11,753.00</td>
-        <td class="money">1,533.00</td>
-        <td class="center">15.00</td>
-        <td class="money">10,220.00</td>
-        <td class="money">14.00</td>
-        <td class="center">730</td>
-        <td class="center">Hrs</td>
-        <td class="rtl">HELPER / المساعد</td>
-        <td class="center">MMC # J0231</td>
-        <td class="center">4</td>
-      </tr>
-      <tr>
-        <td class="money">24,012.00</td>
-        <td class="money">3,132.00</td>
-        <td class="center">15.00</td>
-        <td class="money">20,880.00</td>
-        <td class="money">18.00</td>
-        <td class="center">1160</td>
-        <td class="center">Hrs</td>
-        <td class="rtl">PIPE FITTER / عامل تركيب الأنابيب</td>
-        <td class="center">MMC # J0223</td>
-        <td class="center">5</td>
-      </tr>
-      <tr>
-        <td class="money">3,726.00</td>
-        <td class="money">486.00</td>
-        <td class="center">15.00</td>
-        <td class="money">3,240.00</td>
-        <td class="money">18.00</td>
-        <td class="center">180</td>
-        <td class="center">Hrs</td>
-        <td class="rtl">Plumber / سباك</td>
-        <td class="center">mmc # J0231</td>
-        <td class="center">6</td>
-      </tr>
-      <tr>
-        <td class="money">1,104.00</td>
-        <td class="money">144.00</td>
-        <td class="center">15.00</td>
-        <td class="money">960.00</td>
-        <td class="money">24.00</td>
-        <td class="center">40</td>
-        <td class="center">Hrs</td>
-        <td class="rtl">MULTI WELDER / آلة لحام متعددة</td>
-        <td class="center">MMC # J0223</td>
-        <td class="center">7</td>
-      </tr>
+</tbody>
     </table>
 
     <!-- Totals -->
 
     <table class="totals" style="table-layout: fixed;">
       <tr class="accent-row">
-        <td class="rtl"><strong>المجموع ر.س:</strong> 67,820.00 SAR</td>
-        <td class="rtl"><strong>القيمة المضافة (%15):</strong> 10,173.00 SAR</td>
+        <td class="rtl" style="font-size: 14px; text-align: center;"><strong>{{ $sale->final_total_amount }} SAR : Total /  المجموع </strong> </td>
+        <td class="rtl" style="font-size: 12px; text-align: center;"><strong>{{ $sale->final_total_tax }} SAR : Total VAT/ إجمالي ضريبة القيمة المضافة</strong></td>
       </tr>
       <tr>
-        <td class="rtl"><strong>المبلغ الإجمالي:</strong> 77,993.00 SAR</td>
-        <td class="rtl"><strong>الرصيد المستحق:</strong> 77,993.00 SAR</td>
+        <td class="rtl" style="font-size: 12px; text-align: center;"><strong>{{ $sale->grand_total }} SAR : Grand Total / المجموع الإجمالي</strong></td>
+        <td class="rtl" style="font-size: 12px; text-align: center;"><strong>{{ $sale->grand_total }} SAR : Balance Due / الرصيد المستحق</strong></td>
       </tr>
       <tr>
-        <td class="ltr"><strong>Amount in words:</strong> Seventy Seven Thousand Nine Hundred Ninety Three Saudi Riyals only</td>
-        <td class="rtl"><strong>المبلغ كتابياً:</strong> فقط سبعة وسبعون ألفاً وتسعمائة وثلاثة وتسعون ريالاً سعودياً لا غير</td>
+        <td class="ltr"><strong>Amount in words:</strong> {{ \Rmunate\Utilities\SpellNumber::value($sale->grand_total)->currency('Saudi Riyals')->locale('en')->toMoney() }}</td>
+        <td class="rtl"><strong>     المبلغ بالكلمات : {{ \Illuminate\Support\Number::spell($sale->grand_total, 'ar') }} ريال سعودي</strong></td>
       </tr>
     </table>
 

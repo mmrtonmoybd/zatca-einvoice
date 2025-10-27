@@ -106,5 +106,12 @@
         "bold": "Tajawal-Bold",
         "italic": "Tajawal-Italic",
         "bold_italic": "Tajawal-BoldItalic"
+    },
+    "notonaskharabic": {
+        "normal": "notonaskharabic_normal_36e6a5f2942505ea1f8a502ebe523805"
+    },
+    "droid arabic kufi": {
+        "normal": "\/home\/mmrtonmoybd\/web\/public_html\/my-app\/public\/vendor\/gpdf\/fonts\/droid_arabic_kufi_normal_388924581109e64fe84479eaa151bf92",
+        "bold": "droid_arabic_kufi_bold_a9146909d1490c85dd9df647fd8cb588"
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Pages;
 
+use App\Models\Team;
 use BackedEnum;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
@@ -53,6 +54,14 @@ class Company extends Page implements HasForms
             $this->form->fill();
         }
     }
+
+    public static function canAccess(): bool
+{
+    //dd(auth()->user()->current_team_id);
+    $team = Team::find(auth()->user()->current_team_id);
+    return (bool) ($team && $team->user_id === auth()->user()->id);
+}
+
 
     /**
      * Define form fields

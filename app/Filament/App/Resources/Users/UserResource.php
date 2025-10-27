@@ -16,9 +16,16 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use UnitEnum;
+use App\Models\Team;
 
 class UserResource extends Resource
 {
+        public static function canAccess(): bool
+{
+    //dd(auth()->user()->current_team_id);
+    $team = Team::find(auth()->user()->current_team_id);
+    return (bool) ($team && $team->user_id === auth()->user()->id);
+}
     protected static ?string $model = User::class;
 
     protected static string|UnitEnum|null $navigationGroup = 'Admisnistration';
