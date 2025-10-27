@@ -46,14 +46,14 @@ class UsersTable
                 $query->where('id', '!=', auth()->user()->id); // or false
             })
             ->recordActions([
-                        ViewAction::make(),
-                        EditAction::make(),
-                        DeleteAction::make(),
-                    ])
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
+            ])
             ->toolbarActions([
-                        BulkActionGroup::make([
-                            DeleteBulkAction::make(),
-                        ]),
-                    ]);
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+            ]);
     }
 }

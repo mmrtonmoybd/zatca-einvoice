@@ -9,6 +9,7 @@ use App\Filament\App\Resources\Users\Pages\ViewUser;
 use App\Filament\App\Resources\Users\Schemas\UserForm;
 use App\Filament\App\Resources\Users\Schemas\UserInfolist;
 use App\Filament\App\Resources\Users\Tables\UsersTable;
+use App\Models\Team;
 use App\Models\User;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -16,16 +17,17 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use UnitEnum;
-use App\Models\Team;
 
 class UserResource extends Resource
 {
-        public static function canAccess(): bool
-{
-    //dd(auth()->user()->current_team_id);
-    $team = Team::find(auth()->user()->current_team_id);
-    return (bool) ($team && $team->user_id === auth()->user()->id);
-}
+    public static function canAccess(): bool
+    {
+        // dd(auth()->user()->current_team_id);
+        $team = Team::find(auth()->user()->current_team_id);
+
+        return (bool) ($team && $team->user_id === auth()->user()->id);
+    }
+
     protected static ?string $model = User::class;
 
     protected static string|UnitEnum|null $navigationGroup = 'Admisnistration';

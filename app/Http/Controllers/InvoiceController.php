@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Sale;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Gate;
+use Omaralalwi\Gpdf\Enums\GpdfDefaultSupportedFonts;
+use Omaralalwi\Gpdf\Enums\GpdfSettingKeys as GpdfSet;
 use Omaralalwi\Gpdf\Facade\Gpdf as GpdfFacade;
 use Salla\ZATCA\GenerateQrCode;
 use Salla\ZATCA\Tags\InvoiceDate;
@@ -12,11 +15,6 @@ use Salla\ZATCA\Tags\InvoiceTaxAmount;
 use Salla\ZATCA\Tags\InvoiceTotalAmount;
 use Salla\ZATCA\Tags\Seller;
 use Salla\ZATCA\Tags\TaxNumber;
-use Illuminate\Support\Facades\Config;
-use Omaralalwi\Gpdf\Enums\{GpdfDefaultSettings as GpdfDefault,
-    GpdfSettingKeys as GpdfSet,
-    GpdfDefaultSupportedFonts,
-    GpdfStorageDrivers};
 
 class InvoiceController
 {
@@ -26,9 +24,8 @@ class InvoiceController
         Gate::authorize('access-sale', $sale);
 
         Config::set('gpdf.'.GpdfSet::DEFAULT_PAPER_SIZE, 'a4');
-       // Config::set('gpdf.'.GpdfSet::DPI, 300);
-        //Config::set('gpdf.'.GpdfSet::DEFAULT_FONT, GpdfDefaultSupportedFonts::COURIER);
-
+        // Config::set('gpdf.'.GpdfSet::DPI, 300);
+        // Config::set('gpdf.'.GpdfSet::DEFAULT_FONT, GpdfDefaultSupportedFonts::COURIER);
 
         $company = Company::where('team_id', auth()->user()->currentTeam->id)->first();
 
