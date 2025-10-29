@@ -57,12 +57,12 @@ class Company extends Page implements HasForms
     }
 
     public static function canAccess(): bool
-{
-    //dd(auth()->user()->current_team_id);
-    $team = Team::find(auth()->user()->current_team_id);
-    return (bool) ($team && $team->user_id === auth()->user()->id);
-}
+    {
+        // dd(auth()->user()->current_team_id);
+        $team = Team::find(auth()->user()->current_team_id);
 
+        return (bool) ($team && $team->user_id === auth()->user()->id);
+    }
 
     /**
      * Define form fields

@@ -64,8 +64,13 @@ class CustomerResource extends Resource
                     ->default(null),
                 TextInput::make('vat_no')
                     ->default(null),
+<<<<<<< HEAD
                     TextInput::make('arabic_vat_no')
                     ->default(null)->suffixAction(self::englishToArabic('vat_no', 'arabic_vat_no')),
+=======
+                TextInput::make('arabic_vat_no')
+                    ->default(null),
+>>>>>>> refs/remotes/origin/main
                 TextInput::make('cr_no')
                     ->default(null),
                 TextInput::make('arabic_cr_no')

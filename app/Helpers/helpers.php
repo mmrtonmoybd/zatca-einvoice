@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('toArabicIndicDigits')) {
+if (! function_exists('toArabicIndicDigits')) {
     /**
      * Convert Western digits (0-9) to Arabic-Indic digits (٠-٩)
      */
