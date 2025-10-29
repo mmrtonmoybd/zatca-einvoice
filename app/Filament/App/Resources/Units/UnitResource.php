@@ -20,9 +20,11 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use UnitEnum;
+use App\Traits\HasEnglishToArabic;
 
 class UnitResource extends Resource
 {
+    use  HasEnglishToArabic;
     protected static string|UnitEnum|null $navigationGroup = 'Masters';
 
     protected static ?int $navigationSort = 2;
@@ -42,7 +44,8 @@ class UnitResource extends Resource
                 TextInput::make('short_name')
                     ->required(),
                 TextInput::make('arabic_name')
-                    ->default(null),
+                    ->default(null)
+                   ->suffixAction(self::englishToArabic('name', 'arabic_name')),
                 TextInput::make('quantity')
                     ->required()
                     ->numeric(),

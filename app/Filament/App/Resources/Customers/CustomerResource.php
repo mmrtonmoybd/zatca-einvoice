@@ -22,9 +22,11 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use UnitEnum;
+use App\Traits\HasEnglishToArabic;
 
 class CustomerResource extends Resource
 {
+    use HasEnglishToArabic;
     protected static string|UnitEnum|null $navigationGroup = 'Masters';
 
     protected static ?int $navigationSort = 3;
@@ -44,11 +46,11 @@ class CustomerResource extends Resource
                 TextInput::make('display_name')
                     ->default(null),
                 TextInput::make('arabic_name')
-                    ->default(null),
+                    ->default(null)->suffixAction(self::englishToArabic('name', 'arabic_name')),
                 TextInput::make('address')
                     ->required(),
                 TextInput::make('arabic_address')
-                    ->default(null),
+                    ->default(null)->suffixAction(self::englishToArabic('address', 'arabic_address')),
                 TextInput::make('code')
                     ->required(),
                 TextInput::make('phone')
@@ -63,11 +65,11 @@ class CustomerResource extends Resource
                 TextInput::make('vat_no')
                     ->default(null),
                     TextInput::make('arabic_vat_no')
-                    ->default(null),
+                    ->default(null)->suffixAction(self::englishToArabic('vat_no', 'arabic_vat_no')),
                 TextInput::make('cr_no')
                     ->default(null),
                 TextInput::make('arabic_cr_no')
-                    ->default(null),
+                    ->default(null)->suffixAction(self::englishToArabic('cr_no', 'arabic_cr_no')),
                 TextInput::make('contact_person')
                     ->default(null),
                 FileUpload::make('file')

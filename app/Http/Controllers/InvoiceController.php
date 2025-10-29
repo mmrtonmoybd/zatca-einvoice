@@ -11,6 +11,7 @@ use Salla\ZATCA\Tags\InvoiceDate;
 use Salla\ZATCA\Tags\InvoiceTaxAmount;
 use Salla\ZATCA\Tags\InvoiceTotalAmount;
 use Salla\ZATCA\Tags\Seller;
+use Subhashladumor1\Translate\Facades\Translate;
 use Salla\ZATCA\Tags\TaxNumber;
 use Illuminate\Support\Facades\Config;
 use Omaralalwi\Gpdf\Enums\{GpdfDefaultSettings as GpdfDefault,
@@ -45,5 +46,11 @@ class InvoiceController
         $pdfContent = GpdfFacade::generate($html);
 
         return response($pdfContent, 200, ['Content-Type' => 'application/pdf']);
+    }
+
+    public function text() {
+     $translation = Translate::translate('30046885700003', 'ar');
+
+     echo $translation;
     }
 }

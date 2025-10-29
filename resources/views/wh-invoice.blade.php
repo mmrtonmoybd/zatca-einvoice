@@ -118,6 +118,12 @@ body::before {
   text-align: right;
   
 }
+.latin {
+  direction: ltr;
+  unicode-bidi: embed;
+  font-family: 'DejaVu Sans', sans-serif;
+}
+
     .muted { color: var(--muted); }
     .nowrap { white-space: nowrap; }
 
@@ -172,8 +178,13 @@ table.items tfoot {
         <h1>VAT INVOICE /  فاتورة ضريبة القيمة المضافة </h1>
       </div>
       <div class="invoice-meta">
-        <div><span class="no">No:</span> SI-103</div>
-        <div class="muted rtl">رقم الفاتورة: ١٠٣-SI</div>
+        <div><span class="no">No:</span> {{ $sale->bill_number }}</div>
+
+        <div class="muted rtl">
+  
+  <span dir="ltr" class="latin"> SL-{{ toArabicIndicDigits(str_replace('SL-', '', $sale->bill_number)) }} </span>:<span>رقم الفاتورة</span>
+</div>
+
       </div>
     </div>
 
@@ -314,40 +325,40 @@ table.items tfoot {
     </table>
 
     <!-- Bank details -->
-    <h2 class="section-title">تفاصيل البنك / Bank details</h2>
+    <h2 class="section-title center">تفاصيل البنك  Bank details</h2>
     <table class="bank" style="table-layout: fixed;">
       <tr>
-        <th></th>
-        <th colspan="3">BANK DETAILS</th>
+        
+        <th colspan="4">BANK DETAILS</th>
       </tr>
       <tr>
         <td class="center">Account Name</td>
-        <td class="ltr">MAKKI BIN MOHAMMED BIN MAKKI ALABBADI CONTRACTING EST.</td>
-        <td class="rtl">مؤسسة مكي بن محمد العبادي للمقاولات العامة</td>
-        <td class="center">اسم الحساب</td>
+        <td class="ltr">{{ $company->bank_account_name }}</td>
+        <td class="rtl">{{ $company->arabic_bank_account_name }}</td>
+        <td class="rtl">اسم الحساب</td>
       </tr>
       <tr>
         <td class="center">Bank Name</td>
-        <td class="ltr">ALRAJHI BANK</td>
-        <td class="rtl">بنك الراجحي</td>
-        <td class="center">اسم البنك</td>
+        <td class="ltr">{{ $company->bank_name }} </td>
+        <td class="rtl">{{ $company->arabic_bank_name }}</td>
+        <td class="rtl">اسم البنك</td>
       </tr>
       <tr>
         <td class="center">Account No</td>
-        <td class="ltr">172000010006086231716</td>
-        <td class="rtl">١٧٢٠٠٠٠١٠٠٠٦٠٨٦٢٣١٧١٦</td>
-        <td class="center">رقم البنك</td>
+        <td class="ltr">{{ $company->bank_account_number }}</td>
+        <td class="rtl">{{ $company->arabic_bank_account_number }}</td>
+        <td class="rtl">رقم البنك</td>
       </tr>
       <tr>
         <td class="center">IBAN</td>
-        <td class="ltr">SA8380000172608016231716</td>
-        <td class="rtl">SA٨٣٨٠٠٠٠١٧٢٦٠٨٠١٦٢٣١٧١٦</td>
-        <td class="center">رقم الآيبان</td>
+        <td class="ltr">{{ $company->iban }}</td>
+        <td class="rtl">{{ $company->arabic_iban }}</td>
+        <td class="rtl">رقم الآيبان</td>
       </tr>
       <tr>
         <td class="center">Swift Code</td>
-        <td colspan="2" class="center ltr">RJHISARI</td>
-        <td class="center">رمز السرعة</td>
+        <td colspan="2" class="center ltr">{{ $company->bank_swift_code }}</td>
+        <td class="rtl">رمز السرعة</td>
       </tr>
     </table>
 

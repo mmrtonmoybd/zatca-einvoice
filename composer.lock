@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "695c6c38c7f2a0864fa7692d49ee5e36",
+    "content-hash": "6fbded59c80e6e3cb682b0c291f41c5e",
     "packages": [
         {
             "name": "achyutn/filament-log-viewer",
@@ -6762,6 +6762,87 @@
                 }
             ],
             "time": "2025-02-21T14:16:57+00:00"
+        },
+        {
+            "name": "subhashladumor1/laravel-translate",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/subhashladumor1/laravel-translate.git",
+                "reference": "1e1a00a08e9deec112b92d665d875a346aea047b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/subhashladumor1/laravel-translate/zipball/1e1a00a08e9deec112b92d665d875a346aea047b",
+                "reference": "1e1a00a08e9deec112b92d665d875a346aea047b",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.0",
+                "illuminate/cache": "^9.0|^10.0|^11.0|^12.0",
+                "illuminate/database": "^9.0|^10.0|^11.0|^12.0",
+                "illuminate/http": "^9.0|^10.0|^11.0|^12.0",
+                "illuminate/session": "^9.0|^10.0|^11.0|^12.0",
+                "illuminate/support": "^9.0|^10.0|^11.0|^12.0",
+                "illuminate/view": "^9.0|^10.0|^11.0|^12.0",
+                "php": "^8.1|^8.2|^8.3"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "orchestra/testbench": "^9.0",
+                "phpunit/phpunit": "^9.0|^10.0|^11.0|^12.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Translate": "Subhashladumor1\\Translate\\Facades\\Translate"
+                    },
+                    "providers": [
+                        "Subhashladumor1\\Translate\\TranslateServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Helpers/helpers.php"
+                ],
+                "psr-4": {
+                    "Subhashladumor1\\Translate\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Subhash Ladumor",
+                    "homepage": "https://github.com/subhashladumor1",
+                    "role": "Laravel Package Developer"
+                }
+            ],
+            "description": "🌐 Professional multi-source translation package for Laravel 11+ with free APIs (LibreTranslate, Lingva, MyMemory), smart caching, batch translation, CLI tools, and analytics dashboard. Zero API costs!",
+            "homepage": "https://github.com/subhashladumor1/laravel-translate",
+            "keywords": [
+                "batch-translation",
+                "free-translation",
+                "i18n",
+                "laravel",
+                "libretranslate",
+                "lingva",
+                "localization",
+                "multilingual",
+                "mymemory",
+                "offline-translation",
+                "translate",
+                "translation"
+            ],
+            "support": {
+                "issues": "https://github.com/subhashladumor1/laravel-translate/issues",
+                "source": "https://github.com/subhashladumor1/laravel-translate/tree/1.0.3"
+            },
+            "time": "2025-10-26T09:31:47+00:00"
         },
         {
             "name": "symfony/clock",

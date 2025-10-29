@@ -21,7 +21,10 @@ class TeamsTable
                     ->sortable(),
                 TextColumn::make('name')
                     ->searchable(),
+                TextColumn::make('expires_at')->date(),
                 IconColumn::make('personal_team')
+                    ->boolean(),
+                IconColumn::make('is_active')
                     ->boolean(),
                 TextColumn::make('created_at')
                     ->dateTime()

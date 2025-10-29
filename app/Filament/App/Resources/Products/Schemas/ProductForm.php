@@ -12,9 +12,11 @@ use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use App\Traits\HasEnglishToArabic;
 
 class ProductForm
 {
+    use HasEnglishToArabic;
     public static function configure(Schema $schema): Schema
     {
         return $schema
@@ -25,7 +27,8 @@ class ProductForm
                 TextInput::make('name')
                     ->required(),
                 TextInput::make('arabic_name')
-                    ->default(null),
+                    ->default(null)
+                    ->suffixAction(self::englishToArabic('name', 'arabic_name')),
                 TextInput::make('code')
                     ->required(),
                 TextInput::make('description')

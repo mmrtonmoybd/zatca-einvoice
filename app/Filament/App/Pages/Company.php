@@ -3,6 +3,7 @@
 namespace App\Filament\App\Pages;
 
 use App\Models\Team;
+use App\Traits\HasEnglishToArabic;
 use BackedEnum;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
@@ -19,7 +20,7 @@ use UnitEnum;
 
 class Company extends Page implements HasForms
 {
-    use InteractsWithForms;
+    use InteractsWithForms, HasEnglishToArabic;
 
     public ?array $data = [];
 
@@ -82,6 +83,7 @@ class Company extends Page implements HasForms
                                     TextInput::make('arabic_name')
                                         ->label('Arabic Name')
                                         ->required()
+                                        ->suffixAction($this->englishToArabic('name', 'arabic_name'))
                                         ->columnSpan(6),
 
                                     TextInput::make('address')
@@ -90,6 +92,7 @@ class Company extends Page implements HasForms
                                         ->columnSpan(6),
                                     TextInput::make('arabic_address')
                                         ->label('Arabic Address')
+                                        ->suffixAction($this->englishToArabic('address', 'arabic_address'))
                                         ->required()
                                         ->columnSpan(6),
 
@@ -99,6 +102,7 @@ class Company extends Page implements HasForms
                                         ->columnSpan(6),
                                     TextInput::make('arabic_vat_number')
                                         ->label('Arabic VAT Number')
+                                        ->suffixAction($this->englishToArabic('vat_number', 'arabic_vat_number'))
                                         ->required()
                                         ->columnSpan(6),
 
@@ -108,6 +112,7 @@ class Company extends Page implements HasForms
                                         ->columnSpan(6),
                                     TextInput::make('arabic_cr_no')
                                         ->label('Arabic CR No')
+                                        ->suffixAction($this->englishToArabic('cr_no', 'arabic_cr_no'))
                                         ->required()
                                         ->columnSpan(6),
                                 ]),
@@ -121,6 +126,7 @@ class Company extends Page implements HasForms
                                         ->columnSpan(6),
                                     TextInput::make('arabic_bank_account_name')
                                         ->label('Arabic Bank Account Name')
+                                        ->suffixAction($this->englishToArabic('bank_account_name', 'arabic_bank_account_name'))
                                         ->columnSpan(6),
 
                                     TextInput::make('bank_name')
@@ -128,6 +134,7 @@ class Company extends Page implements HasForms
                                         ->columnSpan(6),
                                     TextInput::make('arabic_bank_name')
                                         ->label('Arabic Bank Name')
+                                        ->suffixAction($this->englishToArabic('bank_name', 'arabic_bank_name'))
                                         ->columnSpan(6),
 
                                     TextInput::make('bank_account_number')
@@ -135,6 +142,7 @@ class Company extends Page implements HasForms
                                         ->columnSpan(6),
                                     TextInput::make('arabic_bank_account_number')
                                         ->label('Arabic Account No')
+                                        ->suffixAction($this->englishToArabic('bank_account_number', 'arabic_bank_account_number'))
                                         ->columnSpan(6),
 
                                     TextInput::make('iban')
@@ -142,6 +150,7 @@ class Company extends Page implements HasForms
                                         ->columnSpan(6),
                                     TextInput::make('arabic_iban')
                                         ->label('Arabic IBAN')
+                                        ->suffixAction($this->englishToArabic('iban', 'arabic_iban'))
                                         ->columnSpan(6),
 
                                     TextInput::make('bank_swift_code')
