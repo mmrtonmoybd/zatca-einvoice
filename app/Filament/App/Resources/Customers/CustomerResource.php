@@ -4,6 +4,7 @@ namespace App\Filament\App\Resources\Customers;
 
 use App\Filament\App\Resources\Customers\Pages\ManageCustomers;
 use App\Models\Customer;
+use App\Traits\HasEnglishToArabic;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -22,11 +23,11 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use UnitEnum;
-use App\Traits\HasEnglishToArabic;
 
 class CustomerResource extends Resource
 {
     use HasEnglishToArabic;
+
     protected static string|UnitEnum|null $navigationGroup = 'Masters';
 
     protected static ?int $navigationSort = 3;
@@ -64,7 +65,7 @@ class CustomerResource extends Resource
                     ->default(null),
                 TextInput::make('vat_no')
                     ->default(null),
-                    TextInput::make('arabic_vat_no')
+                TextInput::make('arabic_vat_no')
                     ->default(null)->suffixAction(self::englishToArabic('vat_no', 'arabic_vat_no')),
                 TextInput::make('cr_no')
                     ->default(null),

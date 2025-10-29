@@ -7,9 +7,6 @@ Route::get('/invoice/pdf/{sale}', [InvoiceController::class, 'index'])->name('sa
 
 Route::get('/test/translate', [InvoiceController::class, 'text']);
 
-Route::get('/', function ()
-
-
-{
+Route::get('/', function () {
     return view('welcome');
 });

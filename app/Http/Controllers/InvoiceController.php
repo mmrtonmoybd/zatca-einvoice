@@ -14,8 +14,8 @@ use Salla\ZATCA\Tags\InvoiceDate;
 use Salla\ZATCA\Tags\InvoiceTaxAmount;
 use Salla\ZATCA\Tags\InvoiceTotalAmount;
 use Salla\ZATCA\Tags\Seller;
-use Subhashladumor1\Translate\Facades\Translate;
 use Salla\ZATCA\Tags\TaxNumber;
+use Subhashladumor1\Translate\Facades\Translate;
 
 class InvoiceController
 {
@@ -45,9 +45,10 @@ class InvoiceController
         return response($pdfContent, 200, ['Content-Type' => 'application/pdf']);
     }
 
-    public function text() {
-     $translation = Translate::translate('30046885700003', 'ar');
+    public function text()
+    {
+        $translation = Translate::translate('30046885700003', 'ar');
 
-     echo $translation;
+        echo $translation;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Filament\App\Resources\Products\Schemas;
 
 use App\Models\Unit;
+use App\Traits\HasEnglishToArabic;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -12,11 +13,11 @@ use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
-use App\Traits\HasEnglishToArabic;
 
 class ProductForm
 {
     use HasEnglishToArabic;
+
     public static function configure(Schema $schema): Schema
     {
         return $schema

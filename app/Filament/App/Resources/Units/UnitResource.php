@@ -4,6 +4,7 @@ namespace App\Filament\App\Resources\Units;
 
 use App\Filament\App\Resources\Units\Pages\ManageUnits;
 use App\Models\Unit;
+use App\Traits\HasEnglishToArabic;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -20,11 +21,11 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use UnitEnum;
-use App\Traits\HasEnglishToArabic;
 
 class UnitResource extends Resource
 {
-    use  HasEnglishToArabic;
+    use HasEnglishToArabic;
+
     protected static string|UnitEnum|null $navigationGroup = 'Masters';
 
     protected static ?int $navigationSort = 2;
@@ -45,7 +46,7 @@ class UnitResource extends Resource
                     ->required(),
                 TextInput::make('arabic_name')
                     ->default(null)
-                   ->suffixAction(self::englishToArabic('name', 'arabic_name')),
+                    ->suffixAction(self::englishToArabic('name', 'arabic_name')),
                 TextInput::make('quantity')
                     ->required()
                     ->numeric(),

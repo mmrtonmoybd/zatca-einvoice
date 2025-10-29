@@ -20,7 +20,7 @@ use UnitEnum;
 
 class Company extends Page implements HasForms
 {
-    use InteractsWithForms, HasEnglishToArabic;
+    use HasEnglishToArabic, InteractsWithForms;
 
     public ?array $data = [];
 
