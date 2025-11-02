@@ -12,3 +12,19 @@ Route::get('/test/translate', [InvoiceController::class, 'text']);
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/migration', function () {
+    $exitCode = Artisan::call('migrate --force');
+    // return what you want
+});
+
+Route::get('/catch', function () {
+    $exitCode = Artisan::call('optimize');
+    // return what you want
+});
+
+Route::get('/clear', function () {
+    $exitCode = Artisan::call('optimize:clear');
+    // return what you want
+});
