@@ -16,6 +16,7 @@ use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Schema;
 use Filament\Support\Exceptions\Halt;
 use Filament\Support\Icons\Heroicon;
+use Filament\Forms\Components\FileUpload;
 use UnitEnum;
 
 class Company extends Page implements HasForms
@@ -115,6 +116,8 @@ class Company extends Page implements HasForms
                                         ->suffixAction($this->englishToArabic('cr_no', 'arabic_cr_no'))
                                         ->required()
                                         ->columnSpan(6),
+
+                                    FileUpload::make('logo')->default(null)->image(),
                                 ]),
                             ]),
 

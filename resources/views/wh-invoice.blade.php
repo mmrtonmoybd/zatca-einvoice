@@ -18,7 +18,7 @@ html, body, table, td, th {
 
 /* Dompdf page box margins (apply to every page) */
 @page {
-  margin: 1.5in 0.5in 0.5in 0.5in;
+  margin: 1.2in 0.5in 0.5in 0.5in;
 }
 header{
         position: fixed;
@@ -52,8 +52,8 @@ body::before {
     :root {
       --accent: #0a5aa1;
       --text: #222;
-      --muted: #666;
-      --border: #ddd;
+      --muted: #000000ff;
+      --border: #000000ff;
       --bg: #fff;
     }
 
@@ -73,37 +73,100 @@ body::before {
       display: flex; flex-direction: column; gap: 4px;
     }
     .title h1 {
-      margin: 0; font-size: 22px; font-weight: 700; color: #fff;
+      margin: 0; font-size: 15px; font-weight: 700; color: #fff;
       text-align: center;
       background-color: #043670ff;
     }
-    .title .subtitle { font-size: 13px; color: var(--muted); text-align: center; }
+    .title .subtitle { font-size: 11px; color: var(--muted); text-align: center; }
     .invoice-meta {
-      text-align: left; direction: ltr; font-size: 13px; color: var(--text);
-    }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9px;
+  color: var(--text);
+  direction: ltr; /* keeps the overall layout left-to-right */
+  margin-bottom: 8px;
+}
+
+.invoice-meta .left {
+  text-align: left;
+}
+
+.invoice-meta .right {
+  text-align: right;
+  direction: rtl;
+}
+
+.invoice-meta .no {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.latin {
+  direction: ltr;
+  unicode-bidi: embed;
+  font-family: 'DejaVu Sans', sans-serif;
+}
+
+/* invoice meta inline (table version for dompdf compatibility) */
+.invoice-meta-inline {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin: 0;             /* align with surrounding header */
+}
+.invoice-meta-inline td {
+  border: none;
+  padding: 0;
+  vertical-align: middle;
+  font-size: 11px;
+  white-space: nowrap;   /* keep each cell on single line */
+}
+
+/* left cell */
+.invoice-meta-inline .meta-left {
+  text-align: left;
+  direction: ltr;
+  width: 50%;
+  padding-left: 4px;
+}
+
+/* right cell */
+.invoice-meta-inline .meta-right {
+  text-align: right;
+  direction: rtl;
+  width: 50%;
+  padding-right: 4px;
+}
+
+/* small helpers */
+.invoice-meta-inline .no { font-weight: 600; color: var(--accent); }
+.latin { direction: ltr; unicode-bidi: embed; font-family: 'DejaVu Sans', sans-serif; }
+.muted { color: var(--muted); }
+
     .invoice-meta .no { font-weight: 600; color: var(--accent); }
 
     h2.section-title {
-      margin: 18px 0 8px; font-size: 13px; color: var(--accent);
-      border-bottom: 1px dashed var(--border); padding-bottom: 6px;
+      margin: 18px 0 8px; font-size: 11px; color: var(--accent);
+      border-bottom: 1px dashed var(--border); padding-bottom: 2px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 8px 0 16px;
+      margin: 6px 0 6px;
       background: #fff;
     }
     th, td {
       border: 1px solid var(--border);
-      padding: 5px 10px;
+      padding: 3px 10px;
       vertical-align: middle;
-      font-size: 11px;
+      font-size: 9px;
     }
     th {
       background: #043670ff;
       color: #ffffffff;
-      font-weight: 600;
+      font-weight: 400;
       text-align: center;
     }
     td { color: var(--text); }
@@ -127,8 +190,8 @@ body::before {
     .muted { color: var(--muted); }
     .nowrap { white-space: nowrap; }
 
-    .items th, .totals th { font-size: 13px; }
-    .items td { font-size: 13px; }
+    .items th, .totals th { font-size: 11px; }
+    .items td { font-size: 9px; }
     .money { text-align: center; direction: ltr; font-variant-numeric: tabular-nums; }
     .center { text-align: center; }
     .right { text-align: right; }
@@ -177,19 +240,27 @@ table.items tfoot {
       <div class="title">
         <h1>VAT INVOICE /  فاتورة ضريبة القيمة المضافة </h1>
       </div>
-      <div class="invoice-meta">
-        <div><span class="no">No:</span> {{ $sale->bill_number }}</div>
+      
 
-        <div class="muted rtl">
-  
-  <span dir="ltr" class="latin"> SL-{{ toArabicIndicDigits(str_replace('SL-', '', $sale->bill_number)) }} </span>:<span>رقم الفاتورة</span>
-</div>
+      <!-- replace your .invoice-meta block with this -->
+<table class="invoice-meta-inline" role="presentation">
+  <tr>
+    <td class="meta-left">
+      <span class="no">No:</span> {{ $sale->bill_number }}
+    </td>
+    <td class="meta-right muted rtl">
+      <span dir="ltr" class="latin">SL-{{ toArabicIndicDigits(str_replace('SL-', '', $sale->bill_number)) }}</span>
+      : <span>رقم الفاتورة</span>
+    </td>
+  </tr>
+</table>
 
-      </div>
+
+
     </div>
 
     <!-- From -->
-    <table style="table-layout: fixed;">
+    <table style="table-layout: fixed; border:none;">
 
       <tr>
         <td class="ltr">From: {{ $company->name }}</td>
@@ -248,7 +319,7 @@ table.items tfoot {
     <!-- Dates -->
 
     <table>
-      <tr>
+      <tr style="font-size: 6px !important;">
         <th>تاريخ الفاتورة | Invoice date</th>
         <th>تاريخ التوريد | Supply date</th>
         <th>رقم التعاقد | Contract / PO No</th>

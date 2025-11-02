@@ -3,6 +3,7 @@
 @source '../../../../app/Filament/App/**/*';
 @source '../../../../resources/views/components/**/*';
 @source '../../../../resources/views/filament/app/**/*';
+@source '../../../../vendor/diogogpinto/filament-auth-ui-enhancer/resources/**/*.blade.php';
 
 ::-webkit-scrollbar {
     width: .56vw !important;
@@ -55,7 +56,8 @@
 }
 
 .fi-sidebar {
-    @apply bg-white! dark:bg-gray-900!;
+    background-color: #00477d !important;
+    @apply dark:bg-gray-900!;
 }
 
 .fi-sidebar-item a,
@@ -63,9 +65,18 @@
     @apply hover:bg-gray-200/50! hover:dark:bg-gray-800!;
 }
 
-.fi-sidebar-item-active a {
-    @apply bg-gray-200/50! dark:bg-gray-800!;
+/* Example: Change all sidebar text to a specific color */
+.fi-sidebar .fi-sidebar-item-label, .fi-sidebar-group-label, .fi-sidebar-item-icon {
+   
+    color: #ffffff !important; /* Replace with your desired hex color */
 }
+
+
+/* Example: Change active link text color */
+.fi-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-btn .fi-sidebar-item-label {
+    color: #151616 !important; /* active color */
+}
+
 
 .fi-btn.fi-color-primary {
     background-image: linear-gradient(
@@ -98,3 +109,17 @@
     overflow-x: auto;
     white-space: nowrap; /* This is crucial for keeping items on a single line */
 }
+
+.fi-topbar > nav { 
+  background-color: #9E5BBA !important;
+  color: #ff0000;
+} 
+
+.fi-topbar-open-sidebar-btn {
+    @apply text-white hover:text-white dark:text-white dark:hover:text-white;
+}
+
+ 
+.fi-sidebar-header {
+    @apply !bg-primary-500 ring-0 shadow-none;
+} 

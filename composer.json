@@ -17,6 +17,7 @@
     "require": {
         "php": "^8.2",
         "achyutn/filament-log-viewer": "^1.2",
+        "diogogpinto/filament-auth-ui-enhancer": "^2.0",
         "filament/filament": "^4.0",
         "jeffersongoncalves/filament-logo": "^2.0",
         "joaopaulolndev/filament-edit-profile": "^2.0",

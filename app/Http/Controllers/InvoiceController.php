@@ -45,6 +45,32 @@ class InvoiceController
         return response($pdfContent, 200, ['Content-Type' => 'application/pdf']);
     }
 
+    public function index2(Sale $sale)
+    {
+
+        Gate::authorize('access-sale', $sale);
+
+        Config::set('gpdf.'.GpdfSet::DEFAULT_PAPER_SIZE, 'a4');
+        // Config::set('gpdf.'.GpdfSet::DPI, 300);
+        // Config::set('gpdf.'.GpdfSet::DEFAULT_FONT, GpdfDefaultSupportedFonts::COURIER);
+
+        $company = Company::where('team_id', auth()->user()->currentTeam->id)->first();
+
+        $qrcode = GenerateQrCode::fromArray([
+            new Seller($company->name), // seller name
+            new TaxNumber($company->vat_number), // seller tax number
+            new InvoiceDate($sale->date), // invoice date as Zulu ISO8601 @see https://en.wikipedia.org/wiki/ISO_8601
+            new InvoiceTotalAmount($sale->grand_total), // invoice total amount
+            new InvoiceTaxAmount($sale->final_total_tax), // invoice tax amount
+            // .......
+        ])->render();
+
+        $html = view('wh-invoice2', compact('sale', 'company', 'qrcode'))->render();
+        $pdfContent = GpdfFacade::generate($html);
+
+        return response($pdfContent, 200, ['Content-Type' => 'application/pdf']);
+    }
+
     public function text()
     {
         $translation = Translate::translate('30046885700003', 'ar');

@@ -13,6 +13,8 @@ use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Tables\Columns\Column;
 
 class ProductForm
 {
@@ -22,6 +24,10 @@ class ProductForm
     {
         return $schema
             ->components([
+                Section::make()->schema([
+
+
+               
                 FileUpload::make('image')
                     ->image(),
 
@@ -144,6 +150,13 @@ class ProductForm
                     ->required()->default(false),
                 Toggle::make('is_active')
                     ->required()->default(true),
+                    
+                        ])->columns([
+                            'sm' => 1,
+                            'md' => 2,
+                            'lg' => 2,
+                            'xl' => 2,
+                        ])->columnSpanFull(),
             ]);
     }
 }

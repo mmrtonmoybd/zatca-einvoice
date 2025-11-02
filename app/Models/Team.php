@@ -48,6 +48,9 @@ class Team extends Model
         'personal_team',
         'expires_at',
         'is_active',
+        'is_with_header',
+        'header_bannar',
+        'footer_bannar',
     ];
 
     public function owner(): BelongsTo
@@ -109,6 +112,7 @@ class Team extends Model
             'personal_team' => 'boolean',
             'expires_at' => 'date',
             'is_active' => 'boolean',
+            'is_with_header' => 'boolean',
         ];
     }
 }

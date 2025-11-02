@@ -63,8 +63,18 @@ class SalesTable
                 //
             ])
             ->recordActions([
-                Action::make('Download invoice')
+                Action::make('download invoice with header')
+                    ->url(fn (Sale $record) => route('sale.invoice2.pdf', $record))
+                    ->icon('heroicon-s-printer')
+                    ->iconButton()
+                    ->visible(fn() => auth()->user()->currentTeam->is_with_header)
+                   // ->tableIcon('heroicon-s-printer')
+                    ->openUrlInNewTab(),
+                Action::make('download invoice without header')
                     ->url(fn (Sale $record) => route('sale.invoice.pdf', $record))
+                    ->icon('heroicon-s-printer')
+                    ->iconButton()
+                   // ->tableIcon('heroicon-s-printer')
                     ->openUrlInNewTab(),
                 ViewAction::make(),
                 EditAction::make(),

@@ -13,6 +13,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
 
 class SaleForm
 {
@@ -20,6 +21,8 @@ class SaleForm
     {
         return $schema
             ->components([
+                Section::make()->schema(
+                    [
                 TextInput::make('bill_number')
                     ->required()
                     ->readonly()
@@ -34,7 +37,7 @@ class SaleForm
                     }),
 
                 DatePicker::make('date')->required(),
-                TextInput::make('narration')->default(null)->columnSpanFull(),
+                TextInput::make('narration')->default(null),
                 Select::make('customer_id')->required()->relationship('customer', 'name'),
                 Select::make('type')
                     ->required()
@@ -47,12 +50,29 @@ class SaleForm
                 DatePicker::make('delivery_date'),
                 TextInput::make('dn_reference')->default(null),
                 DatePicker::make('due_date'),
-                Toggle::make('is_vat')->required()->default(true)->live(),
+                
                 TextInput::make('payment_terms')->default(null),
                 TextInput::make('invoice_period')->default(null),
                 TextInput::make('project_reference')->default(null),
+                Toggle::make('is_vat')->required()->default(true)->live(),
+
+            ])->columns([
+                'sm' => 1,
+                'md' => 2,
+                'xl' => 3,
+                '2xl' => 3,
+            ])->columnSpanFull(),
 
                 // ------------------ Repeater ------------------
+                Section::make()
+              ->columns([
+                'sm' => 12,
+                'md' => 12,
+                'xl' => 12,
+                '2xl' => 12,
+            ])->columnSpanFull()
+            ->grow(true)
+            ->schema([
                 Repeater::make('products')
                     ->live()
                     ->reactive()
@@ -61,7 +81,7 @@ class SaleForm
                     ->deleteAction(fn ($action) => $action->after(fn (Get $get, Set $set) => self::updateTotals($get, $set)))
                     ->columnSpanFull()
                     ->columns(12)
-                    ->extraAttributes(['class' => 'overflow-x-auto min-w-max'])
+                   // ->extraAttributes(['class' => 'overflow-x-auto min-w-max'])
                     ->required()
                     ->schema([
                         Select::make('product_id')
@@ -190,9 +210,12 @@ class SaleForm
                         TextInput::make('after_discount_total')->numeric()->readOnly()->reactive(),
                         TextInput::make('total_tax')->numeric()->readOnly()->reactive(),
                         TextInput::make('total_amount')->numeric()->readOnly()->reactive(),
+                        ]),
                     ]),
 
                 // ------------------ Top-level totals ------------------
+                Section::make()->schema(
+                    [
                 TextInput::make('final_total_amount')->numeric()->readOnly()->reactive(),
                 TextInput::make('final_total_tax')->numeric()->readOnly()->reactive(),
                 TextInput::make('total_product_discount')->numeric()->readOnly()->reactive(),
@@ -207,6 +230,12 @@ class SaleForm
 
                 FileUpload::make('file')->default(null),
                 Toggle::make('is_active')->required()->default(true),
+                    ])->columns([
+                'sm' => 1,
+                'md' => 2,
+                'xl' => 3,
+                '2xl' => 3,
+            ])->columnSpanFull(),
             ]);
     }
 
