@@ -13,7 +13,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::get('/migration', function () {
     $exitCode = Artisan::call('migrate --force');
     // return what you want
