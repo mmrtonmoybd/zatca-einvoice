@@ -6,6 +6,7 @@ use App\Models\Team;
 use App\Traits\HasEnglishToArabic;
 use BackedEnum;
 use Filament\Facades\Filament;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -16,7 +17,6 @@ use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Schema;
 use Filament\Support\Exceptions\Halt;
 use Filament\Support\Icons\Heroicon;
-use Filament\Forms\Components\FileUpload;
 use UnitEnum;
 
 class Company extends Page implements HasForms
