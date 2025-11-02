@@ -67,7 +67,7 @@ class SalesTable
                     ->url(fn (Sale $record) => route('sale.invoice2.pdf', $record))
                     ->icon('heroicon-s-printer')
                     ->iconButton()
-                    ->visible(fn() => auth()->user()->currentTeam->is_with_header)
+                    ->visible(fn () => auth()->user()->currentTeam->is_with_header)
                    // ->tableIcon('heroicon-s-printer')
                     ->openUrlInNewTab(),
                 Action::make('download invoice without header')

@@ -2,7 +2,6 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\App\Pages\Auth\Login;
 use App\Filament\App\Pages\TeamInvitationAccept;
 use App\Filament\App\Pages\Tenancy\EditTeamProfile;
 use App\Filament\App\Pages\Tenancy\RegisterTeam;
@@ -10,6 +9,7 @@ use App\Http\Middleware\ApplyTenantScopes;
 use App\Http\Middleware\CheckTenantSuspension;
 use App\Http\Middleware\CurrentTenant;
 use App\Models\Team;
+use DiogoGPinto\AuthUIEnhancer\AuthUIEnhancerPlugin;
 use Filament\Actions\Action;
 use Filament\Enums\ThemeMode;
 use Filament\Facades\Filament;
@@ -21,6 +21,7 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Width;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -30,9 +31,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
-use DiogoGPinto\AuthUIEnhancer\AuthUIEnhancerPlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
-    use Filament\Support\Enums\Width; 
 
 class AppPanelProvider extends PanelProvider
 {

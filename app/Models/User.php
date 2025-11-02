@@ -198,16 +198,16 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
     public function company()
-{
-    return $this->hasOneThrough(
-        Company::class, // final model we want
-        Team::class,    // intermediate model
-        'id',           // foreign key on teams table
-        'team_id',      // foreign key on companies table
-        'current_team_id', // local key on users table
-        'id'            // local key on teams table
-    );
-}
+    {
+        return $this->hasOneThrough(
+            Company::class, // final model we want
+            Team::class,    // intermediate model
+            'id',           // foreign key on teams table
+            'team_id',      // foreign key on companies table
+            'current_team_id', // local key on users table
+            'id'            // local key on teams table
+        );
+    }
 
     protected function casts(): array
     {

@@ -3,10 +3,10 @@
 namespace App\Filament\Admin\Resources\Teams\Schemas;
 
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 
@@ -31,13 +31,13 @@ class TeamForm
                     ->label('Invoice Header Bannar')
                     ->requiredIfAccepted('is_with_header')
                     ->image()
-                    ->visible(fn(Get $get) => $get('is_with_header')),
+                    ->visible(fn (Get $get) => $get('is_with_header')),
 
                 FileUpload::make('footer_bannar')
                     ->label('Invoice Footer Bannar')
                     ->requiredIfAccepted('is_with_header')
                     ->image()
-                    ->visible(fn(Get $get) => $get('is_with_header')),
+                    ->visible(fn (Get $get) => $get('is_with_header')),
 
             ]);
     }
