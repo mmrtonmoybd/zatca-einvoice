@@ -16,17 +16,12 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
-use UnitEnum;
-
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\QueryBuilder;
-//use Filament\QueryBuilder\Constraints\TextConstraint;
-use Filament\QueryBuilder\Constraints\NumberConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Enums\FiltersLayout;
-use Filament\Tables\Filters\TernaryFilter;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+// use Filament\QueryBuilder\Constraints\TextConstraint;
+use UnitEnum;
 
 class CategoryResource extends Resource
 {
@@ -73,7 +68,7 @@ class CategoryResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-             ->filters([
+            ->filters([
                 Filter::make('name')
                     ->schema([
                         TextInput::make('name')->placeholder('Search By name'),
@@ -93,11 +88,10 @@ class CategoryResource extends Resource
                             fn (Builder $query, $name): Builder => $query->where('description', 'LIKE', '%'.$name.'%'),
                         );
                     }),
-                
-              
-                ], layout: FiltersLayout::AboveContent)
-                ->filtersFormColumns(2)
-                 ->deferFilters(false)
+
+            ], layout: FiltersLayout::AboveContent)
+            ->filtersFormColumns(2)
+            ->deferFilters(false)
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),

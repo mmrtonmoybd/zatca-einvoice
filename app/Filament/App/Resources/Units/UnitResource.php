@@ -19,16 +19,13 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+// use Filament\QueryBuilder\Constraints\TextConstraint;
 use UnitEnum;
-use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\QueryBuilder;
-//use Filament\QueryBuilder\Constraints\TextConstraint;
-use Filament\QueryBuilder\Constraints\NumberConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
-use Filament\Tables\Enums\FiltersLayout;
 
 class UnitResource extends Resource
 {
@@ -118,28 +115,28 @@ class UnitResource extends Resource
                             fn (Builder $query, $name): Builder => $query->where('short_name', 'LIKE', '%'.$name.'%'),
                         );
                     }),
-                
-               TernaryFilter::make('is_child')
-                     ->label('Is Child Unit?')
-                     ->placeholder('All Units')
-                     ->nullable()
-                         ->queries(
-        true: fn (Builder $query) => $query->where('is_child', '!=', 0),
-        false: fn (Builder $query) => $query->where('is_child', '=', 0),
-        blank: fn (Builder $query) => $query, // In this example, we do not want to filter the query when it is blank.
-    ),
-                ], layout: FiltersLayout::AboveContent)
-                ->filtersFormColumns(3)
-             ->deferFilters(false)
+
+                TernaryFilter::make('is_child')
+                    ->label('Is Child Unit?')
+                    ->placeholder('All Units')
+                    ->nullable()
+                    ->queries(
+                        true: fn (Builder $query) => $query->where('is_child', '!=', 0),
+                        false: fn (Builder $query) => $query->where('is_child', '=', 0),
+                        blank: fn (Builder $query) => $query, // In this example, we do not want to filter the query when it is blank.
+                    ),
+            ], layout: FiltersLayout::AboveContent)
+            ->filtersFormColumns(3)
+            ->deferFilters(false)
             ->recordActions([
-                EditAction::make(),
-                DeleteAction::make(),
-            ])
+                                EditAction::make(),
+                                DeleteAction::make(),
+                            ])
             ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+                                BulkActionGroup::make([
+                                    DeleteBulkAction::make(),
+                                ]),
+                            ]);
     }
 
     public static function getPages(): array

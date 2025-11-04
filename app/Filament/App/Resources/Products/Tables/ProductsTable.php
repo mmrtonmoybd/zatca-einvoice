@@ -7,21 +7,16 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
-
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\QueryBuilder;
-//use Filament\QueryBuilder\Constraints\TextConstraint;
-use Filament\QueryBuilder\Constraints\NumberConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Enums\FiltersLayout;
-
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
+// use Filament\QueryBuilder\Constraints\TextConstraint;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProductsTable
 {
@@ -89,7 +84,7 @@ class ProductsTable
                         );
                     }),
 
-                    Filter::make('code')
+                Filter::make('code')
                     ->schema([
                         TextInput::make('code')->placeholder('Search By code'),
                     ])->query(function (Builder $query, array $data): Builder {
@@ -99,32 +94,29 @@ class ProductsTable
                         );
                     }),
 
-
-                    Filter::make('category')
-                       ->schema([
-                        Select::make('category_id')
-                        ->relationship('category', 'name')->preload(),
-                       ])->query(function (Builder $query, array $data): Builder {
-                        return $query->when(
-                            $data['category_id'],
-                            fn (Builder $query, $category_id): Builder => $query->where('category_id', $category_id),
-                        );
-                    }),
-
-                    
-
-                     Filter::make('arabic_name')
+                Filter::make('category')
                     ->schema([
-                        TextInput::make('arabic_name')->placeholder('Search By arabic name'),
-                    ])->query(function (Builder $query, array $data): Builder {
-                        return $query->when(
-                            $data['arabic_name'],
-                            fn (Builder $query, $arabic_name): Builder => $query->where('arabic_name', 'LIKE', '%'.$arabic_name.'%'),
-                        );
-                    }),
+                            Select::make('category_id')
+                                ->relationship('category', 'name')->preload(),
+                        ])->query(function (Builder $query, array $data): Builder {
+                            return $query->when(
+                                $data['category_id'],
+                                fn (Builder $query, $category_id): Builder => $query->where('category_id', $category_id),
+                            );
+                        }),
+
+                Filter::make('arabic_name')
+                    ->schema([
+                                TextInput::make('arabic_name')->placeholder('Search By arabic name'),
+                            ])->query(function (Builder $query, array $data): Builder {
+                                return $query->when(
+                                    $data['arabic_name'],
+                                    fn (Builder $query, $arabic_name): Builder => $query->where('arabic_name', 'LIKE', '%'.$arabic_name.'%'),
+                                );
+                            }),
             ], layout: FiltersLayout::AboveContent)
-                ->filtersFormColumns(4)
-                 ->deferFilters(false)
+            ->filtersFormColumns(4)
+            ->deferFilters(false)
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
@@ -132,7 +124,7 @@ class ProductsTable
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                            DeleteBulkAction::make(),
                 ]),
             ]);
     }
