@@ -96,24 +96,24 @@ class ProductsTable
 
                 Filter::make('category')
                     ->schema([
-                            Select::make('category_id')
-                                ->relationship('category', 'name')->preload(),
-                        ])->query(function (Builder $query, array $data): Builder {
-                            return $query->when(
-                                $data['category_id'],
-                                fn (Builder $query, $category_id): Builder => $query->where('category_id', $category_id),
-                            );
-                        }),
+                        Select::make('category_id')
+                            ->relationship('category', 'name')->preload(),
+                    ])->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['category_id'],
+                            fn (Builder $query, $category_id): Builder => $query->where('category_id', $category_id),
+                        );
+                    }),
 
                 Filter::make('arabic_name')
                     ->schema([
-                                TextInput::make('arabic_name')->placeholder('Search By arabic name'),
-                            ])->query(function (Builder $query, array $data): Builder {
-                                return $query->when(
-                                    $data['arabic_name'],
-                                    fn (Builder $query, $arabic_name): Builder => $query->where('arabic_name', 'LIKE', '%'.$arabic_name.'%'),
-                                );
-                            }),
+                    TextInput::make('arabic_name')->placeholder('Search By arabic name'),
+                    ])->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['arabic_name'],
+                            fn (Builder $query, $arabic_name): Builder => $query->where('arabic_name', 'LIKE', '%'.$arabic_name.'%'),
+                        );
+                    }),
             ], layout: FiltersLayout::AboveContent)
             ->filtersFormColumns(4)
             ->deferFilters(false)
@@ -124,7 +124,7 @@ class ProductsTable
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                            DeleteBulkAction::make(),
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }

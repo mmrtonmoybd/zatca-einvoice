@@ -129,14 +129,14 @@ class UnitResource extends Resource
             ->filtersFormColumns(3)
             ->deferFilters(false)
             ->recordActions([
-                                EditAction::make(),
-                                DeleteAction::make(),
-                            ])
+                EditAction::make(),
+                DeleteAction::make(),
+            ])
             ->toolbarActions([
-                                BulkActionGroup::make([
-                                    DeleteBulkAction::make(),
-                                ]),
-                            ]);
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+            ]);
     }
 
     public static function getPages(): array

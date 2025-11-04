@@ -188,33 +188,33 @@ class CustomerResource extends Resource
 
                 Filter::make('vat_no')
                     ->schema([
-                            TextInput::make('vat_no')->placeholder('Search By vat number'),
-                        ])->query(function (Builder $query, array $data): Builder {
-                            return $query->when(
-                                $data['vat_no'],
-                                fn (Builder $query, $vat_no): Builder => $query->where('vat_no', 'LIKE', '%'.$vat_no.'%'),
-                            );
-                        }),
+                        TextInput::make('vat_no')->placeholder('Search By vat number'),
+                    ])->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['vat_no'],
+                            fn (Builder $query, $vat_no): Builder => $query->where('vat_no', 'LIKE', '%'.$vat_no.'%'),
+                        );
+                    }),
 
                 Filter::make('mobile')
                     ->schema([
-                                TextInput::make('mobile')->placeholder('Search By mobile number'),
-                            ])->query(function (Builder $query, array $data): Builder {
-                                return $query->when(
-                                    $data['mobile'],
-                                    fn (Builder $query, $mobile): Builder => $query->where('mobile', 'LIKE', '%'.$mobile.'%'),
-                                );
-                            }),
+                    TextInput::make('mobile')->placeholder('Search By mobile number'),
+                    ])->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['mobile'],
+                            fn (Builder $query, $mobile): Builder => $query->where('mobile', 'LIKE', '%'.$mobile.'%'),
+                        );
+                    }),
 
                 Filter::make('address')
                     ->schema([
-                                    TextInput::make('address')->placeholder('Search By address'),
-                                ])->query(function (Builder $query, array $data): Builder {
-                                    return $query->when(
-                                        $data['address'],
-                                        fn (Builder $query, $address): Builder => $query->where('address', 'LIKE', '%'.$address.'%'),
-                                    );
-                                }),
+                        TextInput::make('address')->placeholder('Search By address'),
+                    ])->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['address'],
+                            fn (Builder $query, $address): Builder => $query->where('address', 'LIKE', '%'.$address.'%'),
+                        );
+                    }),
             ], layout: FiltersLayout::AboveContent)
             ->filtersFormColumns(5)
             ->deferFilters(false)
@@ -225,7 +225,7 @@ class CustomerResource extends Resource
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                                DeleteBulkAction::make(),
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
