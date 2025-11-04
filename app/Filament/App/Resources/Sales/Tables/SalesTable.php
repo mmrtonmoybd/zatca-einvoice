@@ -10,24 +10,18 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
-
-
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\QueryBuilder;
-//use Filament\QueryBuilder\Constraints\TextConstraint;
-use Filament\QueryBuilder\Constraints\NumberConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Enums\FiltersLayout;
-
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
+// use Filament\QueryBuilder\Constraints\TextConstraint;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\TernaryFilter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 
 class SalesTable
 {
@@ -75,7 +69,7 @@ class SalesTable
                     ->boolean(),
             ])
             ->defaultSort('id', 'desc')
-           ->filters([
+            ->filters([
                 Filter::make('bill_number')
                     ->schema([
                         TextInput::make('bill_number')->placeholder('Search By bill number'),
@@ -88,8 +82,6 @@ class SalesTable
 
                 DateRangeFilter::make('date'),
 
-                
-
                 Filter::make('customer_id')
                     ->schema([
                         Select::make('customer_id')->relationship('customer', 'name'),
@@ -100,7 +92,7 @@ class SalesTable
                         );
                     }),
 
-                    Filter::make('type')
+                Filter::make('type')
                     ->schema([
                         Select::make('type')
                             ->required()
@@ -116,23 +108,23 @@ class SalesTable
                     }),
 
                 Filter::make('po_eference')
-                ->label('PO.Ref Number')
+                    ->label('PO.Ref Number')
                     ->schema([
-                        TextInput::make('po_eference')->placeholder('Search By PO.Ref Number'),
-                    ])->query(function (Builder $query, array $data): Builder {
-                        return $query->when(
-                            $data['po_eference'],
-                            fn (Builder $query, $po_eference): Builder => $query->where('po_eference', 'LIKE', '%'.$po_eference.'%'),
-                        );
-                    }),
+                            TextInput::make('po_eference')->placeholder('Search By PO.Ref Number'),
+                        ])->query(function (Builder $query, array $data): Builder {
+                            return $query->when(
+                                $data['po_eference'],
+                                fn (Builder $query, $po_eference): Builder => $query->where('po_eference', 'LIKE', '%'.$po_eference.'%'),
+                            );
+                        }),
 
                 Filter::make('customer_id')
                     ->schema([
-                        Select::make('product_id')
-                                    ->label('Product')
-                                    ->options(fn () => Product::where('team_id', auth()->user()->currentTeam->id)->pluck('name', 'id')),
-                    ])->query(function (Builder $query, array $data): Builder {
-                        return $query->when(
+                            Select::make('product_id')
+                                ->label('Product')
+                                ->options(fn () => Product::where('team_id', auth()->user()->currentTeam->id)->pluck('name', 'id')),
+                        ])->query(function (Builder $query, array $data): Builder {
+                            return $query->when(
                                 $data['product_id'],
                                 function (Builder $query, $product_id) {
                                     $query->where(function ($q) use ($product_id) {
@@ -141,71 +133,68 @@ class SalesTable
                                 }
                             );
 
-                    }),
+                        }),
 
                 Filter::make('grand_total')
-                ->label('grand_total')
+                    ->label('grand_total')
                     ->schema([
-                        TextInput::make('grand_total')->placeholder('Search By grand total'),
-                    ])->query(function (Builder $query, array $data): Builder {
-                        return $query->when(
-                            $data['grand_total'],
-                            fn (Builder $query, $grand_total): Builder => $query->where('grand_total', 'LIKE', '%'.$grand_total.'%'),
-                        );
-                    }),
+                            TextInput::make('grand_total')->placeholder('Search By grand total'),
+                        ])->query(function (Builder $query, array $data): Builder {
+                            return $query->when(
+                                $data['grand_total'],
+                                fn (Builder $query, $grand_total): Builder => $query->where('grand_total', 'LIKE', '%'.$grand_total.'%'),
+                            );
+                        }),
 
-
-                    DateRangeFilter::make('due_date'),
-
+                DateRangeFilter::make('due_date'),
 
                 Filter::make('narration')
                     ->schema([
-                        TextInput::make('narration')->placeholder('Search By narration'),
-                    ])->query(function (Builder $query, array $data): Builder {
-                        return $query->when(
-                            $data['narration'],
-                            fn (Builder $query, $narration): Builder => $query->where('narration', 'LIKE', '%'.$narration.'%'),
-                        );
-                    }),
+                            TextInput::make('narration')->placeholder('Search By narration'),
+                        ])->query(function (Builder $query, array $data): Builder {
+                            return $query->when(
+                                $data['narration'],
+                                fn (Builder $query, $narration): Builder => $query->where('narration', 'LIKE', '%'.$narration.'%'),
+                            );
+                        }),
 
+                TernaryFilter::make('is_vat')
+                    ->label('Search by TAX')
+                    ->placeholder('All')
+                    ->trueLabel('Tax Included')
+                    ->falseLabel('Tax Excluded')
+                    ->nullable()
+                    ->queries(
+                        true: fn (Builder $query) => $query->where('is_vat', 1),
+                        false: fn (Builder $query) => $query->where('is_vat', 0),
+                        blank: fn (Builder $query) => $query, // In this example, we do not want to filter the query when it is blank.
+                    ),
 
-                     TernaryFilter::make('is_vat')
-                     ->label('Search by TAX')
-                     ->placeholder('All')
-                     ->trueLabel('Tax Included')
-                         ->falseLabel('Tax Excluded')
-                     ->nullable()
-                         ->queries(
-        true: fn (Builder $query) => $query->where('is_vat', 1),
-        false: fn (Builder $query) => $query->where('is_vat', 0),
-        blank: fn (Builder $query) => $query, // In this example, we do not want to filter the query when it is blank.
-    ),
-              
-                ], layout: FiltersLayout::AboveContent)
-                ->filtersFormColumns(4)
-                 ->deferFilters(false)
+            ], layout: FiltersLayout::AboveContent)
+            ->filtersFormColumns(4)
+            ->deferFilters(false)
             ->recordActions([
-                Action::make('download invoice with header')
-                    ->url(fn (Sale $record) => route('sale.invoice2.pdf', $record))
-                    ->icon('heroicon-s-printer')
-                    ->iconButton()
-                    ->visible(fn () => auth()->user()->currentTeam->is_with_header)
-                   // ->tableIcon('heroicon-s-printer')
-                    ->openUrlInNewTab(),
-                Action::make('download invoice without header')
-                    ->url(fn (Sale $record) => route('sale.invoice.pdf', $record))
-                    ->icon('heroicon-s-printer')
-                    ->iconButton()
-                   // ->tableIcon('heroicon-s-printer')
-                    ->openUrlInNewTab(),
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
-            ])
+                                Action::make('download invoice with header')
+                                    ->url(fn (Sale $record) => route('sale.invoice2.pdf', $record))
+                                    ->icon('heroicon-s-printer')
+                                    ->iconButton()
+                                    ->visible(fn () => auth()->user()->currentTeam->is_with_header)
+                                   // ->tableIcon('heroicon-s-printer')
+                                    ->openUrlInNewTab(),
+                                Action::make('download invoice without header')
+                                    ->url(fn (Sale $record) => route('sale.invoice.pdf', $record))
+                                    ->icon('heroicon-s-printer')
+                                    ->iconButton()
+                                   // ->tableIcon('heroicon-s-printer')
+                                    ->openUrlInNewTab(),
+                                ViewAction::make(),
+                                EditAction::make(),
+                                DeleteAction::make(),
+                            ])
             ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+                                BulkActionGroup::make([
+                                    DeleteBulkAction::make(),
+                                ]),
+                            ]);
     }
 }
