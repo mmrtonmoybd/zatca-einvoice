@@ -19,6 +19,15 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use UnitEnum;
 
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\QueryBuilder;
+//use Filament\QueryBuilder\Constraints\TextConstraint;
+use Filament\QueryBuilder\Constraints\NumberConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\TernaryFilter;
+
 class CategoryResource extends Resource
 {
     protected static string|UnitEnum|null $navigationGroup = 'Masters';
@@ -64,9 +73,31 @@ class CategoryResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                //
-            ])
+             ->filters([
+                Filter::make('name')
+                    ->schema([
+                        TextInput::make('name')->placeholder('Search By name'),
+                    ])->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['name'],
+                            fn (Builder $query, $name): Builder => $query->where('name', 'LIKE', '%'.$name.'%'),
+                        );
+                    }),
+
+                Filter::make('description')
+                    ->schema([
+                        TextInput::make('description')->placeholder('Search By description'),
+                    ])->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['description'],
+                            fn (Builder $query, $name): Builder => $query->where('description', 'LIKE', '%'.$name.'%'),
+                        );
+                    }),
+                
+              
+                ], layout: FiltersLayout::AboveContent)
+                ->filtersFormColumns(2)
+                 ->deferFilters(false)
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),

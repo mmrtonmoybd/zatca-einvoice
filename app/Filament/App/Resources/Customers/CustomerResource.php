@@ -24,6 +24,15 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use UnitEnum;
 
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\QueryBuilder;
+//use Filament\QueryBuilder\Constraints\TextConstraint;
+use Filament\QueryBuilder\Constraints\NumberConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\TernaryFilter;
+
 class CustomerResource extends Resource
 {
     use HasEnglishToArabic;
@@ -138,12 +147,14 @@ class CustomerResource extends Resource
                     */
                 TextColumn::make('code')
                     ->searchable(),
+                
+                TextColumn::make('vat_no')
+                    ->searchable(),
                 // TextColumn::make('phone')->searchable(),
                 TextColumn::make('mobile')
                     ->searchable(),
                 // TextColumn::make('email')->label('Email address') ->searchable(),
-                TextColumn::make('vat_no')
-                    ->searchable(),
+               
 
                 TextColumn::make('address')
                     ->searchable(),
@@ -161,8 +172,58 @@ class CustomerResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
-            ])
+                Filter::make('name')
+                    ->schema([
+                        TextInput::make('name')->placeholder('Search By name'),
+                    ])->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['name'],
+                            fn (Builder $query, $name): Builder => $query->where('name', 'LIKE', '%'.$name.'%'),
+                        );
+                    }),
+
+                    Filter::make('code')
+                    ->schema([
+                        TextInput::make('code')->placeholder('Search By code'),
+                    ])->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['code'],
+                            fn (Builder $query, $code): Builder => $query->where('code', 'LIKE', '%'.$code.'%'),
+                        );
+                    }),
+
+                    Filter::make('vat_no')
+                    ->schema([
+                        TextInput::make('vat_no')->placeholder('Search By vat number'),
+                    ])->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['vat_no'],
+                            fn (Builder $query, $vat_no): Builder => $query->where('vat_no', 'LIKE', '%'.$vat_no.'%'),
+                        );
+                    }),
+
+                    Filter::make('mobile')
+                    ->schema([
+                        TextInput::make('mobile')->placeholder('Search By mobile number'),
+                    ])->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['mobile'],
+                            fn (Builder $query, $mobile): Builder => $query->where('mobile', 'LIKE', '%'.$mobile.'%'),
+                        );
+                    }),
+
+                     Filter::make('address')
+                    ->schema([
+                        TextInput::make('address')->placeholder('Search By address'),
+                    ])->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['address'],
+                            fn (Builder $query, $address): Builder => $query->where('address', 'LIKE', '%'.$address.'%'),
+                        );
+                    }),
+            ], layout: FiltersLayout::AboveContent)
+                ->filtersFormColumns(5)
+                 ->deferFilters(false)
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),

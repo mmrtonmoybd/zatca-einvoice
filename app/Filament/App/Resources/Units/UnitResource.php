@@ -19,8 +19,16 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use UnitEnum;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\QueryBuilder;
+//use Filament\QueryBuilder\Constraints\TextConstraint;
+use Filament\QueryBuilder\Constraints\NumberConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
+use Filament\Tables\Enums\FiltersLayout;
 
 class UnitResource extends Resource
 {
@@ -91,8 +99,38 @@ class UnitResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
-            ])
+                Filter::make('name')
+                    ->schema([
+                        TextInput::make('name')->placeholder('Search By name'),
+                    ])->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['name'],
+                            fn (Builder $query, $name): Builder => $query->where('name', 'LIKE', '%'.$name.'%'),
+                        );
+                    }),
+
+                Filter::make('short_name')
+                    ->schema([
+                        TextInput::make('short_name')->placeholder('Search By short name'),
+                    ])->query(function (Builder $query, array $data): Builder {
+                        return $query->when(
+                            $data['short_name'],
+                            fn (Builder $query, $name): Builder => $query->where('short_name', 'LIKE', '%'.$name.'%'),
+                        );
+                    }),
+                
+               TernaryFilter::make('is_child')
+                     ->label('Is Child Unit?')
+                     ->placeholder('All Units')
+                     ->nullable()
+                         ->queries(
+        true: fn (Builder $query) => $query->where('is_child', '!=', 0),
+        false: fn (Builder $query) => $query->where('is_child', '=', 0),
+        blank: fn (Builder $query) => $query, // In this example, we do not want to filter the query when it is blank.
+    ),
+                ], layout: FiltersLayout::AboveContent)
+                ->filtersFormColumns(3)
+             ->deferFilters(false)
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),

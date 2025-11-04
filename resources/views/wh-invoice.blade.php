@@ -4,7 +4,7 @@
     <meta charset='utf-8'>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   
-  <title>فاتورة ضريبية / VAT INVOICE - SI-103</title>
+<title>فاتورة ضريبية / VAT INVOICE - {{ $sale->bill_number }}</title>
   <style>
 
   
@@ -358,8 +358,6 @@ table.items tfoot {
     </thead>
     <tbody>
       @foreach ($sale->products as $key => $productData)
-      
-      @endforeach
       <tr>
         <td class="money">{{ $productData['total_amount'] }}</td>
         <td class="money">{{ $productData['total_tax'] }}</td>
@@ -375,6 +373,7 @@ table.items tfoot {
         <td class="center">{{ $product->code }}</td>
         <td class="center">{{ $key + 1 }}</td>
       </tr>
+      @endforeach
 </tbody>
     </table>
 
@@ -444,12 +443,12 @@ table.items tfoot {
         <th>Invoice received by | المستقبل</th>
       </tr>
       <tr>
-        <td class="center">Signature / Stamp</td>
+        <td class="center" style="vertical-align: bottom;">Signature / Stamp</td>
         <td class="center">
           <!-- Optional QR placeholder -->
           <div style="width:120px;height:120px;border:1px dashed #bbb;margin:0 auto;"> <img width="120px" height="120px" src="{{ $qrcode }}" alt="QR Code" /></div>
         </td>
-        <td class="center">Signature / Stamp</td>
+        <td class="center" style="vertical-align: bottom;">Signature / Stamp</td>
       </tr>
     </table>
 
